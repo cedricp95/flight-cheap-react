@@ -24,6 +24,9 @@ function HomePage() {
   return (
     <>
       <MeetupList meetups={DUMMY_MEETUPS} />
+      <Button variant="contained" size="large">
+        Sample UI Button
+      </Button>
     </>
   );
 }
