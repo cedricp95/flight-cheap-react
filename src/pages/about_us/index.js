@@ -1,5 +1,8 @@
 import CameraIcon from "@mui/icons-material/PhotoCamera";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Image from "next/image";
+import { styled } from "@mui/material/styles";
+
+import Grid from "@mui/material/Unstable_Grid2";
 
 import {
   Avatar,
@@ -9,7 +12,6 @@ import {
   Toolbar,
   Box,
   Stack,
-  Grid,
   CssBaseline,
   CardMedia,
   CardContent,
@@ -17,14 +19,19 @@ import {
   Card,
   Button,
   AppBar,
+  createTheme,
+  ThemeProvider,
+  Paper,
 } from "@mui/material";
+
+const FlightCheapLogoOnlyTransparent = "/FlightCheapLogoOnlyTransparent.png";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="http://localhost:3000/">
+        FlightCheap
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -32,11 +39,19 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
+const cards = [1, 2, 3];
 
 const theme = createTheme();
 
-export default function Album() {
+const AboutUs = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -44,11 +59,10 @@ export default function Album() {
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            About Us
           </Typography>
         </Toolbar>
       </AppBar>
-
       <main>
         {/* Hero unit */}
         <Box
@@ -148,6 +162,7 @@ export default function Album() {
         </Box>
         {/* End of Avatar */}
 
+        {/* Cards */}
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
             {cards.map((card) => (
@@ -186,11 +201,27 @@ export default function Album() {
             ))}
           </Grid>
         </Container>
+        {/* Cards */}
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Image
+          src={FlightCheapLogoOnlyTransparent}
+          alt="Cheap Flight Logo"
+          width={50}
+          height={50}
+        />
+      </Box>
+
+      <Box
+        sx={{ bgcolor: "background.paper", p: 1 }}
+        component="footer"
+        alignContent="flex-start"
+        alignItems="flex-start"
+        justify="flex-start"
+      >
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          FlightCheap
         </Typography>
         <Typography
           variant="subtitle1"
@@ -198,11 +229,13 @@ export default function Album() {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Cheapest Flight Fare Finder
         </Typography>
         <Copyright />
       </Box>
       {/* End footer */}
     </ThemeProvider>
   );
-}
+};
+
+export default AboutUs;
