@@ -1,0 +1,22 @@
+.form {
+  padding: 1rem;
+}
+
+.control {
+  margin: 0.5rem;
+}
+
+.control label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.control input {
+  display: block;
+  width: 100%;
+}
+
+.actions {
+  text-align: right;
+}
