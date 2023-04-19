@@ -4,8 +4,9 @@ export default function Dashboard() {
   return (
     <>
       <Layout type="auth">
-        yahooo
+        This is dashboard
       </Layout>
     </>
   );
 }
+

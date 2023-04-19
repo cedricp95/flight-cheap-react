@@ -4,7 +4,7 @@ export default function Home() {
     return (
       <>
         <Layout type="auth">
-            yahooo
+            This is our home page
         </Layout>
       </>
     );
