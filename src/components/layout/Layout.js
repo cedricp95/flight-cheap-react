@@ -19,6 +19,7 @@ import {
   Button,
   AppBar,
 } from "@mui/material";
+import Image from "next/image";
 
 function Copyright() {
   return (
@@ -33,11 +34,10 @@ function Copyright() {
   );
 }
 
-
-
 const theme = createTheme();
 function Layout(props) {
-  console.log(props,":props")
+  const FlightCheapLogoOnlyTransparent = "/FlightCheapLogoOnlyTransparent.png";
+  console.log(props, ":props");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -50,11 +50,26 @@ function Layout(props) {
         </Toolbar>
       </AppBar>
 
-      <main >{props.children}</main>
+      <main>{props.children}</main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Image
+          src={FlightCheapLogoOnlyTransparent}
+          alt="Cheap Flight Logo"
+          width={50}
+          height={50}
+        />
+      </Box>
+
+      <Box
+        sx={{ bgcolor: "background.paper", p: 1 }}
+        component="footer"
+        alignContent="flex-start"
+        alignItems="flex-start"
+        justify="flex-start"
+      >
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          FlightCheap
         </Typography>
         <Typography
           variant="subtitle1"
@@ -62,11 +77,11 @@ function Layout(props) {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Cheapest Flight Fare Finder
         </Typography>
         <Copyright />
       </Box>
-      {/* End footer */}
+      {/* End Footer */}
     </ThemeProvider>
   );
 }
