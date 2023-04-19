@@ -1,4 +1,5 @@
 import Layout from "../../components/layout/Layout";
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import {
   Avatar,
   Link,
@@ -17,10 +18,11 @@ import {
   createTheme,
   ThemeProvider,
   Paper,
-  Grid,
+  CardHeader,
+  Divider,
 } from "@mui/material";
 
-import Footer from "./../../components/Footer";
+import { styled } from "@mui/material/styles";
 
 function Copyright() {
   return (
@@ -35,7 +37,45 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const cards = [1, 2, 3];
+const devTeam = [
+  {
+    id: 1,
+    name: "Starsky",
+    role: "Team Leader",
+    picture: "avatar1.jpg",
+  },
+  {
+    id: 2,
+    name: "Cedric",
+    role: "Frontend Lead",
+    picture: "avatar2.jpg",
+  },
+  {
+    id: 3,
+    name: "Cary",
+    role: "Assistant Team Leader/Frontend",
+    picture: "avatar3.jpg",
+  },
+  {
+    id: 4,
+    name: "John Paul",
+    role: "Full Stack Developer",
+    picture: "avatar3.jpg",
+  },
+  {
+    id: 5,
+    name: "Francely",
+    role: "Assistant Team Leader/Backend",
+    picture: "avatar3.jpg",
+  },
+  {
+    id: 6,
+    name: "Romart",
+    role: "Frontend Developer",
+    picture: "avatar3.jpg",
+  },
+];
 
 const AboutUs = () => {
   const FlightCheapLogoOnlyTransparent = "/FlightCheapLogoOnlyTransparent.png";
@@ -74,48 +114,52 @@ const AboutUs = () => {
             direction="row"
             spacing={2}
             justifyContent="center"
-          >
-            <Button variant="contained">Main call to action</Button>
-            <Button variant="outlined">Secondary action</Button>
-          </Stack>
+          ></Stack>
         </Container>
       </Box>
       {/* End hero unit */}
 
-      {/* Avatar */}
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-        }}
+      <Typography
+        component="h1"
+        variant="h2"
+        align="center"
+        color="text.primary"
+        gutterBottom
       >
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            {["Starsky", "Cedric", "Cary", "Francely", "Paul", "Romart"].map(
-              (name, index) => (
-                <Grid
-                  key={name}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  minHeight={180}
-                >
-                  <Avatar
-                    src={`/about-us/avatar${index + 1}.jpg`}
-                    sx={{ width: 125, height: 125 }}
-                  />
+        Meet the Team
+      </Typography>
 
-                  <Typography sx={{ ml: 1.5 }}>{name}</Typography>
-                </Grid>
-              )
-            )}
+      {/* Avatar */}
+
+      <Grid
+        sx={{
+          textAlign: "center !important",
+          justifyContent: "center !important",
+          alignItems: "center !important",
+        }}
+        container
+        spacing={2}
+        pl={8}
+        pr={8}
+      >
+        {devTeam.map((persons, index) => (
+          <Grid item xs={12} sm={4} key={persons.id}>
+            <Card>
+              <CardContent>
+                <Avatar
+                  src={`/about-us/avatar${index + 1}.jpg`}
+                  sx={{
+                    margin: "auto",
+                    width: 125,
+                    height: 125,
+                  }}
+                />
+                <CardHeader title={persons.name} subheader={persons.role} />
+              </CardContent>
+            </Card>
           </Grid>
-        </Container>
-      </Box>
+        ))}
+      </Grid>
       {/* End of Avatar */}
 
       <Container sx={{ py: 8 }} maxWidth="md">
@@ -140,7 +184,7 @@ const AboutUs = () => {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Heading
+                    Heading 1
                   </Typography>
                   <Typography>
                     This is a media card. You can use this section to describe
