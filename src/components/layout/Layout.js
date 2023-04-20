@@ -1,5 +1,3 @@
-import MainNavigation from "./MainNavigation";
-import classes from "./Layout.module.css";
 import CameraIcon from "@mui/icons-material/PhotoCamera";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
@@ -20,6 +18,7 @@ import {
   AppBar,
 } from "@mui/material";
 import Image from "next/image";
+import { LocalAirport } from "@mui/icons-material";
 
 function Copyright() {
   return (
@@ -43,9 +42,9 @@ function Layout(props) {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
+          <LocalAirport sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            FlightCheap
           </Typography>
         </Toolbar>
       </AppBar>
