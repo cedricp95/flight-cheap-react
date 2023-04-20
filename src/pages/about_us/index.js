@@ -5,24 +5,15 @@ import {
   Link,
   Container,
   Typography,
-  Toolbar,
   Box,
   Stack,
-  CssBaseline,
-  CardMedia,
   CardContent,
-  CardActions,
   Card,
-  Button,
-  AppBar,
-  createTheme,
-  ThemeProvider,
-  Paper,
   CardHeader,
   Divider,
 } from "@mui/material";
 
-import { styled } from "@mui/material/styles";
+import Image from "next/image";
 
 function Copyright() {
   return (
@@ -36,8 +27,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const cards = [1, 2, 3];
 const devTeam = [
   {
     id: 1,
@@ -82,46 +71,65 @@ const AboutUs = () => {
   return (
     <Layout>
       {/* Hero unit */}
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-        }}
-      >
-        <Container maxWidth="sm">
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
-            Our Goal
+      <Container maxWidth="sm" sx={{ mt: 8 }}>
+        <Typography variant="h1" align="center" gutterBottom>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Image
+              src={FlightCheapLogoOnlyTransparent}
+              alt="Cheap Flight Logo"
+              width={150}
+              height={150}
+            />
+          </Box>
+          FlightCheap
+        </Typography>
+
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography align="center" variant="h4" color="text.secondary">
+            Cheapest Flight Fare Finder
           </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.secondary"
-            paragraph
-          >
-            To provide affordable flight fares to our customers without
-            compromising on the quality of service and convenience, making air
-            travel accessible and budget-friendly for everyone.
-          </Typography>
-          <Stack
-            sx={{ pt: 4 }}
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-          ></Stack>
-        </Container>
-      </Box>
+        </Box>
+      </Container>
+
+      <Container maxWidth="sm">
+        <Divider sx={{ mt: 8, mb: 8 }} />
+      </Container>
+
+      <Container maxWidth="sm">
+        <Typography
+          variant="h1"
+          align="center"
+          color="text.primary"
+          sx={{ mb: 4 }}
+        >
+          Our Goal
+        </Typography>
+        <Typography
+          variant="h5"
+          align="center"
+          color="text.secondary"
+          paragraph
+        >
+          To provide affordable flight fares to our customers without
+          compromising on the quality of service and convenience, making air
+          travel accessible and budget-friendly for everyone.
+        </Typography>
+        <Stack
+          sx={{ pt: 4 }}
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+        ></Stack>
+      </Container>
       {/* End hero unit */}
+
+      <Container maxWidth="sm">
+        <Divider sx={{ mt: 8, mb: 8 }} />
+      </Container>
 
       <Typography
         component="h1"
-        variant="h2"
+        variant="h1"
         align="center"
         color="text.primary"
         gutterBottom
