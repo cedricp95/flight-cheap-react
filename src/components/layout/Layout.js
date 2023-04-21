@@ -41,11 +41,40 @@ function Layout(props) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
-          <LocalAirport sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            FlightCheap
-          </Typography>
+        <Toolbar sx={{ flexWrap: "wrap" }}>
+          <LocalAirport />
+          <Link
+            variant="button"
+            color="inherit"
+            href="/"
+            sx={{ my: 1, mx: 1.5, textDecoration: "none", flexGrow: 1 }}
+          >
+            <Typography
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
+              FlightCheap
+            </Typography>
+          </Link>
+          <nav>
+            <Link
+              variant="button"
+              color="inherit"
+              href="/contact-us"
+              sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
+            >
+              Contact Us
+            </Link>
+            <Link
+              variant="button"
+              color="inherit"
+              href="/about_us"
+              sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
+            >
+              About Us
+            </Link>
+          </nav>
         </Toolbar>
       </AppBar>
 
