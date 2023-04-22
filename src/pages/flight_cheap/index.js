@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 function CommentsPage() {
-  const [comments, setComments] = useState([]);
+  const [arrayOfObjects, setArrayOfObjects] = useState([]);
   const [comment, setComment] = useState("");
 
   const fetchComments = async () => {
     const response = await fetch("./api/comments");
     const data = await response.json();
-    setComments(data);
+    setArrayOfObjects(data);
   };
 
   const submitComment = async () => {
@@ -20,7 +20,7 @@ function CommentsPage() {
     });
     const data = await response.json();
     console.log(data);
-    setComments([data, ...comments]);
+    setArrayOfObjects([data, ...arrayOfObjects]);
   };
 
   return (
@@ -32,14 +32,19 @@ function CommentsPage() {
       />
       <button onClick={submitComment}>Submit Comment</button>
       <button onClick={fetchComments}>Load Comments</button>
-      {comments.map((comment) => {
-        return (
-          <div key={comment.id}>
-            {/* Linked to the data/comments.js */}
-            {comment.id} - {comment.text}
-          </div>
-        );
-      })}
+      <ul>
+        {arrayOfObjects.map((comment) => {
+          return (
+            // Linked to the data/comments.js
+            <>
+              <li key={comment.id}>
+                ID:{comment.id} - {comment.firstName}
+                <button onClick={() => console.log(comment.id)}>Delete</button>
+              </li>
+            </>
+          );
+        })}
+      </ul>
     </>
   );
 }

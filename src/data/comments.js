@@ -1,14 +1,14 @@
-export const comments = [
+export const arrayOfObjects = [
   {
     id: 1,
-    text: "This is the first comment",
+    firstName: "This is the first comment",
   },
   {
     id: 2,
-    text: "This is the second comment",
+    firstName: "This is the second comment",
   },
   {
     id: 3,
-    text: "This is the third comment",
+    firstName: "This is the third comment",
   },
 ];
