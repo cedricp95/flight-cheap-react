@@ -1,14 +1,27 @@
 export const arrayOfObjects = [
   {
     id: 1,
-    firstName: "This is the first comment",
+    name: "AirAsia Philippines",
+    iata_code: "Z2",
   },
   {
     id: 2,
-    firstName: "This is the second comment",
+    name: "Cebu Pacific",
+    iata_code: "5J",
   },
   {
     id: 3,
-    firstName: "This is the third comment",
+    name: "PAL Express",
+    iata_code: "2P",
+  },
+  {
+    id: 4,
+    name: "Philippine Airlines",
+    iata_code: "PR",
+  },
+  {
+    id: 5,
+    name: "SkyJet Airlines",
+    iata_code: "M8",
   },
 ];

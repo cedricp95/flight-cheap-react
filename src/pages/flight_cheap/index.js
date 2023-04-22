@@ -33,13 +33,15 @@ function CommentsPage() {
       <button onClick={submitComment}>Submit Comment</button>
       <button onClick={fetchComments}>Load Comments</button>
       <ul>
-        {arrayOfObjects.map((comment) => {
+        {arrayOfObjects.map((flightInfo) => {
           return (
             // Linked to the data/comments.js
             <>
-              <li key={comment.id}>
-                ID:{comment.id} - {comment.firstName}
-                <button onClick={() => console.log(comment.id)}>Delete</button>
+              <li key={flightInfo.id}>
+                ID:{flightInfo.id} - {flightInfo.firstName}
+                <button onClick={() => console.log(flightInfo.id)}>
+                  Delete
+                </button>
               </li>
             </>
           );
