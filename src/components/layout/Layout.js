@@ -58,6 +58,14 @@ function Layout(props) {
             </Typography>
           </Link>
           <nav>
+          <Link
+              variant="button"
+              color="inherit"
+              href="/dashboard"
+              sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
+            >
+              Dashboard
+            </Link>
             <Link
               variant="button"
               color="inherit"
