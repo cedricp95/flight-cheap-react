@@ -34,6 +34,18 @@ function SearchForm(props) {
 
   const [iataData, setIataData] = useState([]);
 
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
+
+  const handleSubmit = () => {
+    // Send a POST request with the selected values
+    fetch("/my-api-endpoint", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to }),
+    });
+  };
+
   const topPlaces = [
     { label: "Boracay", id: 0 },
     { label: "Singapore", id: 1 },
@@ -124,6 +136,7 @@ function SearchForm(props) {
                 )}
               />
             </Grid>
+
             <Grid item xs={6}>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}
@@ -182,6 +195,7 @@ function SearchForm(props) {
             variant="outlined"
             component="a"
             sx={{ mt: 8 }}
+            onClick={handleSubmit}
           >
             Search Flights
           </Button>
