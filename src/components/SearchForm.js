@@ -37,6 +37,8 @@ function SearchForm(props) {
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
 
+  // todo: add the post request to search for cheapest flight
+
   const handleSubmit = () => {
     // Send a POST request with the selected values
     fetch("/my-api-endpoint", {
@@ -44,6 +46,7 @@ function SearchForm(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ from, to }),
     });
+    console.log(JSON.stringify({ from, to }));
   };
 
   const topPlaces = [
