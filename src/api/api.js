@@ -1,11 +1,28 @@
 import axios from 'axios';
 
+const list_except_path_auth = [
+  '/login',
+  '/healthz'
+]
 export default function handler() {
-  
+  const instance = axios.create({
+    baseURL: 'https://squid-app-9q7r5.ondigitalocean.app',
+    withCredentials:true
+  });
   // Add a request interceptor
-  axios.interceptors.request.use(function (config) {
+  instance.interceptors.request.use(function (config) {
     // Do something before request is sent
-    console.log(config,"request")
+    //console.log(config.headers,"headers")
+    if (list_except_path_auth.indexOf(config.url) === -1){
+      const token = sessionStorage.getItem("token"); 
+        if (token !== null){
+           config.headers['Bearer-Authentication'] = token;
+        return config;
+      }else{
+        alert("Session has expired, please try to login again")
+      }
+    }
+    
     return config;
   }, function (error) {
     // Do something with request error
@@ -13,10 +30,9 @@ export default function handler() {
   });
 
   // Add a response interceptor
-  axios.interceptors.response.use(function (response) {
+  instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    console.log(response,"response")
     return response;
   }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
@@ -24,8 +40,6 @@ export default function handler() {
     return Promise.reject(error);
   });
   //const instance = axios.default.baseUrl = "http://localhost:5000";
-  const instance = axios.create({
-    baseURL: 'http://localhost:5000'
-  });
+ 
   return instance;
 }

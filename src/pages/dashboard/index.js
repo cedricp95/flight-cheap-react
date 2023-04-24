@@ -10,13 +10,20 @@ import Layout from "../../components/layout/Layout";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import comments from "../../data/comments";
 import { useState } from "react";
-
 import BannerSection from "../../components/BannerSection";
 import SearchForm from "../../components/SearchForm";
 import SearchResults from "../../components/SearchResults";
 import Box from "@mui/material/Box";
 
 export default function Dashboard() {
+  useEffect(() => {
+    
+    get_iata().then((res,req)=>{
+      
+      console.log(res,"res",req);
+    }).catch((e)=>{
+    })
+  });
   const BannerSectionDetails = {
     title: "Book cheap flights now!",
     description:

@@ -13,3 +13,7 @@ export async function login(username,password) {
     })
 }
 
+export async function get_iata() {
+
+    return await api().get("/iata_code/")
+}
