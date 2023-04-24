@@ -15,10 +15,25 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { get_iata } from "@/api/auth";
+import { useEffect, useState } from "react";
 
 import Card from "@mui/material/Card";
 
 function SearchForm(props) {
+  useEffect(() => {
+    get_iata()
+      .then((res) => {
+        setIataData(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const [iataData, setIataData] = useState([]);
+
   const topPlaces = [
     { label: "Boracay", id: 0 },
     { label: "Singapore", id: 1 },
@@ -92,19 +107,18 @@ function SearchForm(props) {
           <Grid container spacing={2}>
             <Grid item xs={3}>
               <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={topPlaces}
+                options={iataData}
+                getOptionLabel={(option) => option.CITY}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="From" />
                 )}
               />
             </Grid>
+
             <Grid item xs={3}>
               <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={topPlaces}
+                options={iataData}
+                getOptionLabel={(option) => option.CITY}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="To" />
                 )}
