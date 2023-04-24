@@ -15,18 +15,6 @@ import {
 
 import Image from "next/image";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="http://localhost:3000/">
-        FlightCheap
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 const devTeam = [
   {
     id: 1,
