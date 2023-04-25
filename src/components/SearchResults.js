@@ -7,12 +7,13 @@ export default function FixedSizeGrid(props) {
     { field: "cityFrom", headerName: "From", width: 170 },
     { field: "cityTo", headerName: "To", width: 170 },
     { field: "airlines_name", headerName: "Airlines", width: 170 },
+
     {
-      field: "utc_arrival",
-      headerName: "Arrival",
+      field: "utc_departure",
+      headerName: "Departure",
       width: 250,
       valueGetter: (params) => {
-        const utcDate = new Date(params.row.utc_arrival);
+        const utcDate = new Date(params.row.utc_departure);
         const localDate = new Date(
           utcDate.toLocaleString("en-US", { timeZone: "Asia/Manila" })
         );
@@ -25,11 +26,11 @@ export default function FixedSizeGrid(props) {
       },
     },
     {
-      field: "utc_departure",
-      headerName: "Departure",
+      field: "utc_arrival",
+      headerName: "Arrival",
       width: 250,
       valueGetter: (params) => {
-        const utcDate = new Date(params.row.utc_departure);
+        const utcDate = new Date(params.row.utc_arrival);
         const localDate = new Date(
           utcDate.toLocaleString("en-US", { timeZone: "Asia/Manila" })
         );
