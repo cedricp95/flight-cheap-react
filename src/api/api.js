@@ -19,6 +19,7 @@ export default function handler() {
            config.headers['Bearer-Authentication'] = token;
         return config;
       }else{
+        window.sessionStorage.clear();
         alert("Session has expired, please try to login again")
       }
     }

@@ -1,4 +1,5 @@
 import CameraIcon from "@mui/icons-material/PhotoCamera";
+import  { useState,useEffect } from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Avatar,
@@ -20,6 +21,12 @@ import {
 import Image from "next/image";
 import { LocalAirport } from "@mui/icons-material";
 
+const exclude_pathname = [
+  'access/logout',
+  'access/login',
+  'about_us'
+]
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -36,7 +43,18 @@ function Copyright() {
 const theme = createTheme();
 function Layout(props) {
   const FlightCheapLogoOnlyTransparent = "/FlightCheapLogoOnlyTransparent.png";
-  console.log(props, ":props");
+
+  const [isLogin, setLogin] = useState(true);
+  useEffect(() => {
+    const pathname = window.location.pathname.replace(/(^\/|\/$)/g,"")
+    if (exclude_pathname.indexOf(pathname) === -1){
+      const token = sessionStorage.getItem("token");
+      setLogin(token !== null)
+    }
+    
+    //setNotLogin(token===null);
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -85,8 +103,16 @@ function Layout(props) {
           </nav>
         </Toolbar>
       </AppBar>
-
+    {isLogin?
+    <>
       <main>{props.children}</main>
+    </>:
+    <>
+    <Link color="inherit" href="/access/login">
+                Sign in 
+              </Link>
+    </>}
+      
       {/* Footer */}
       <Box display="flex" justifyContent="center" alignItems="center">
         <Image
