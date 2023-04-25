@@ -36,6 +36,12 @@ function SearchForm(props) {
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
 
+  const [selectedDates, setSelectedDates] = useState(null);
+
+  const handleDateRangePicker = (dd) => {
+    setSelectedDates(dd);
+  };
+
   const handleButtonClick = async () => {
     // const response = await fetch("/api/my-endpoint", {
     //   method: "POST",
@@ -45,6 +51,9 @@ function SearchForm(props) {
     // console.log("POST Request: " + data);
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
+
+    console.log("Selected start date:", selectedDates[0].toString());
+    console.log("Selected end date:", selectedDates[1].toString());
   };
 
   const topPlaces = [
@@ -155,6 +164,7 @@ function SearchForm(props) {
                   slotProps={{
                     textField: { InputProps: { endAdornment: <Calendar /> } },
                   }}
+                  onChange={(newValue) => handleDateRangePicker(newValue)}
                 />
               </LocalizationProvider>
             </Grid>
