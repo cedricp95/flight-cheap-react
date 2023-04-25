@@ -19,6 +19,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
 import { get_iata } from "@/api/auth";
+import dayjs from "dayjs";
 
 function SearchForm(props) {
   useEffect(() => {
@@ -51,9 +52,12 @@ function SearchForm(props) {
     // console.log("POST Request: " + data);
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
-
-    console.log("Selected start date:", selectedDates[0].toString());
-    console.log("Selected end date:", selectedDates[1].toString());
+    if (selectedDates) {
+      const startDate = dayjs(selectedDates[0]).format("DD/MM/YYYY");
+      const endDate = dayjs(selectedDates[1]).format("DD/MM/YYYY");
+      console.log("Selected start date:", startDate);
+      console.log("Selected end date:", endDate);
+    }
   };
 
   const topPlaces = [
