@@ -1,7 +1,15 @@
-import * as React from "react";
-import { Box } from "@mui/material";
-import { Container } from "@mui/material";
-import { Grid, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Container,
+  Grid,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Card,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Typography from "@mui/material/Typography";
@@ -10,15 +18,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { get_iata } from "@/api/auth";
-import { useEffect, useState } from "react";
-
-import Card from "@mui/material/Card";
+import dayjs from "dayjs";
 
 function SearchForm(props) {
   useEffect(() => {
@@ -33,19 +34,30 @@ function SearchForm(props) {
   }, []);
 
   const [iataData, setIataData] = useState([]);
-
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
 
+  const [selectedDates, setSelectedDates] = useState(null);
+
+  const handleDateRangePicker = (dd) => {
+    setSelectedDates(dd);
+  };
+
   const handleButtonClick = async () => {
-    const response = await fetch("/api/my-endpoint", {
-      method: "POST",
-      body: JSON.stringify({ from: fromValue, to: toValue }),
-    });
-    const data = await response.json();
-    console.log("POST Request: " + data);
-    console.log("From: " + fromValue);
-    console.log("To: " + toValue);
+    // const response = await fetch("/api/my-endpoint", {
+    //   method: "POST",
+    //   body: JSON.stringify({ from: fromValue, to: toValue }),
+    // });
+    // const data = await response.json();
+    // console.log("POST Request: " + data);
+    console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
+    console.log("To: " + JSON.stringify(toValue.IATA_CODE));
+    if (selectedDates) {
+      const startDate = dayjs(selectedDates[0]).format("DD/MM/YYYY");
+      const endDate = dayjs(selectedDates[1]).format("DD/MM/YYYY");
+      console.log("Selected start date:", startDate);
+      console.log("Selected end date:", endDate);
+    }
   };
 
   const topPlaces = [
@@ -97,8 +109,9 @@ function SearchForm(props) {
             <Grid item xs={3}>
               <div>
                 <FormControl
-                  variant="standard"
+                  variant="filled"
                   sx={{ m: 1, minWidth: 80, borderBottom: "none" }}
+                  margin="normal"
                 >
                   <InputLabel id="demo-simple-select-autowidth-label">
                     Trip
@@ -155,6 +168,7 @@ function SearchForm(props) {
                   slotProps={{
                     textField: { InputProps: { endAdornment: <Calendar /> } },
                   }}
+                  onChange={(newValue) => handleDateRangePicker(newValue)}
                 />
               </LocalizationProvider>
             </Grid>
@@ -166,7 +180,6 @@ function SearchForm(props) {
                 id="filled-number"
                 label="Adults"
                 type="number"
-                margin="filled-number"
                 sx={{ width: 1 }}
               />
             </Grid>
