@@ -17,10 +17,22 @@ import Image from "next/image";
 
 const devTeam = [
   {
-    id: 1,
-    name: "Starsky",
+    id: 3,
+    name: "Cary",
     role: "Team Leader",
-    picture: "avatar1.jpg",
+    picture: "avatar3.jpg",
+  },
+  {
+    id: 5,
+    name: "Francely",
+    role: "Assistant Team Leader/Backend",
+    picture: "avatar5.jpg",
+  },
+  {
+    id: 4,
+    name: "John Paul",
+    role: "Full Stack Developer",
+    picture: "avatar4.jpg",
   },
   {
     id: 2,
@@ -29,28 +41,16 @@ const devTeam = [
     picture: "avatar2.jpg",
   },
   {
-    id: 3,
-    name: "Cary",
-    role: "Assistant Team Leader/Frontend",
-    picture: "avatar3.jpg",
-  },
-  {
-    id: 4,
-    name: "John Paul",
-    role: "Full Stack Developer",
-    picture: "avatar3.jpg",
-  },
-  {
-    id: 5,
-    name: "Francely",
-    role: "Assistant Team Leader/Backend",
-    picture: "avatar3.jpg",
+    id: 1,
+    name: "Starsky",
+    role: "Backend Developer",
+    picture: "avatar1.jpg",
   },
   {
     id: 6,
     name: "Romart",
     role: "Frontend Developer",
-    picture: "avatar3.jpg",
+    picture: "avatar6.jpg",
   },
 ];
 
@@ -142,7 +142,7 @@ const AboutUs = () => {
             <Card>
               <CardContent>
                 <Avatar
-                  src={`/about-us/avatar${index + 1}.jpg`}
+                  src={`/about-us/${persons.picture}`}
                   sx={{
                     margin: "auto",
                     width: 125,
