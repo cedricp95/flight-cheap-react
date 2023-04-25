@@ -116,7 +116,7 @@ function ContactUs() {
                     </Typography>
                   </Item>
                   <Typography variant="p" align="center">
-                    +27 13 codev-help
+                    +63 32 318 5780
                   </Typography>
                 </Box>
               </Grid>
@@ -131,7 +131,7 @@ function ContactUs() {
                     </Typography>
                   </Item>
                   <Typography variant="p" align="center">
-                    codevbusiness@email.com
+                    email@codev.com
                   </Typography>
                 </Box>
               </Grid>
@@ -146,7 +146,7 @@ function ContactUs() {
                     </Typography>
                   </Item>
                   <Typography variant="p" align="center">
-                    {"27 13 IT Park"}
+                    {"7F, The Link, Cebu IT Park, Apas, Cebu City, Philippines"}
                   </Typography>
                 </Box>
               </Grid>
