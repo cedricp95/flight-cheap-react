@@ -10,6 +10,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
+import dayjs from "dayjs";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -36,6 +37,20 @@ function SearchForm(props) {
 
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
+
+  const sd = new Date();
+  const ed = new Date();
+  const endDate = ed.setDate(ed.getDate() + 5);
+
+  const [value, setValue] = React.useState([
+    dayjs(sd),
+    dayjs(endDate),
+  ]);
+
+  const handleDateRangePicker = (dd) => {
+    console.log("start date", dayjs(dd[0].$d).format("DD/MM/YYYY"));
+    console.log("end date", dayjs(dd[1].$d).format("DD/MM/YYYY"));
+  };
 
   const handleButtonClick = async () => {
     const response = await fetch("/api/my-endpoint", {
@@ -97,8 +112,9 @@ function SearchForm(props) {
             <Grid item xs={3}>
               <div>
                 <FormControl
-                  variant="standard"
+                  variant="filled"
                   sx={{ m: 1, minWidth: 80, borderBottom: "none" }}
+                  margin="normal"
                 >
                   <InputLabel id="demo-simple-select-autowidth-label">
                     Trip
@@ -152,6 +168,8 @@ function SearchForm(props) {
               >
                 <DateRangePicker
                   localeText={{ start: "Check-in", end: "Check-out" }}
+                  value={value}
+                  onChange={(newValue) => handleDateRangePicker(newValue)}
                   slotProps={{
                     textField: { InputProps: { endAdornment: <Calendar /> } },
                   }}
@@ -166,7 +184,6 @@ function SearchForm(props) {
                 id="filled-number"
                 label="Adults"
                 type="number"
-                margin="filled-number"
                 sx={{ width: 1 }}
               />
             </Grid>
