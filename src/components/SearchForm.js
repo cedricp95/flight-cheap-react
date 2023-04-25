@@ -15,9 +15,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { get_iata } from "@/api/auth";
+import { get_iata,get_search_flights } from "@/api/auth";
 import { useEffect, useState } from "react";
-
 import Card from "@mui/material/Card";
 
 function SearchForm(props) {
@@ -38,14 +37,14 @@ function SearchForm(props) {
   const [toValue, setToValue] = useState(null);
 
   const handleButtonClick = async () => {
-    const response = await fetch("/api/my-endpoint", {
-      method: "POST",
-      body: JSON.stringify({ from: fromValue, to: toValue }),
-    });
-    const data = await response.json();
-    console.log("POST Request: " + data);
-    console.log("From: " + fromValue);
-    console.log("To: " + toValue);
+   // const response = await fetch("/api/my-endpoint", {
+   //   method: "POST",
+   //   body: JSON.stringify({ from: fromValue, to: toValue }),
+   // });
+   // const data = await response.json();
+   // console.log("POST Request: " + data);
+   // console.log("From: " + fromValue);
+   // console.log("To: " + toValue);
   };
 
   const topPlaces = [
