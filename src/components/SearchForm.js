@@ -44,10 +44,7 @@ function SearchForm(props) {
   const ed = new Date();
   const endDate = ed.setDate(ed.getDate() + 5);
 
-  const [value, setValue] = React.useState([
-    dayjs(sd),
-    dayjs(endDate),
-  ]);
+  const [value, setValue] = React.useState([dayjs(sd), dayjs(endDate)]);
 
   const handleDateRangePicker = (dd) => {
     console.log("start date", dayjs(dd[0].$d).format("DD/MM/YYYY"));
@@ -64,12 +61,10 @@ function SearchForm(props) {
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
 
-    console.log("Selected Date Range: " + selectedDateRange);
-
-    const formattedDateRange = selectedDateRange.map((date) =>
-      date && isValid(date) ? format(date, "dd/MM/yyyy") : ""
+    const selectedDateRange = value.map((date) =>
+      dayjs(date.$d).format("DD/MM/YYYY")
     );
-    console.log("Formatted: " + formattedDateRange);
+    console.log("Selected date range:", selectedDateRange);
   };
 
   const topPlaces = [
@@ -188,8 +183,6 @@ function SearchForm(props) {
                   slotProps={{
                     textField: { InputProps: { endAdornment: <Calendar /> } },
                   }}
-                  value={selectedDateRange}
-                  onChange={handleDateRangeChange}
                   renderInput={(startProps, endProps) => (
                     <>
                       <TextField {...startProps} />
