@@ -21,6 +21,8 @@ import { useEffect, useState } from "react";
 
 import Card from "@mui/material/Card";
 
+import { format, isValid } from "date-fns";
+
 function SearchForm(props) {
   useEffect(() => {
     get_iata()
@@ -53,14 +55,21 @@ function SearchForm(props) {
   };
 
   const handleButtonClick = async () => {
-    const response = await fetch("/api/my-endpoint", {
-      method: "POST",
-      body: JSON.stringify({ from: fromValue, to: toValue }),
-    });
-    const data = await response.json();
-    console.log("POST Request: " + data);
-    console.log("From: " + fromValue);
-    console.log("To: " + toValue);
+    // const response = await fetch("/api/my-endpoint", {
+    //   method: "POST",
+    //   body: JSON.stringify({ from: fromValue, to: toValue }),
+    // });
+    // const data = await response.json();
+    // console.log("POST Request: " + data);
+    console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
+    console.log("To: " + JSON.stringify(toValue.IATA_CODE));
+
+    console.log("Selected Date Range: " + selectedDateRange);
+
+    const formattedDateRange = selectedDateRange.map((date) =>
+      date && isValid(date) ? format(date, "dd/MM/yyyy") : ""
+    );
+    console.log("Formatted: " + formattedDateRange);
   };
 
   const topPlaces = [
@@ -80,6 +89,12 @@ function SearchForm(props) {
 
   const handleChange = (event) => {
     setTrip(event.target.value);
+  };
+
+  const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
+
+  const handleDateRangeChange = (dateRange) => {
+    setSelectedDateRange(dateRange);
   };
 
   return (
@@ -173,6 +188,15 @@ function SearchForm(props) {
                   slotProps={{
                     textField: { InputProps: { endAdornment: <Calendar /> } },
                   }}
+                  value={selectedDateRange}
+                  onChange={handleDateRangeChange}
+                  renderInput={(startProps, endProps) => (
+                    <>
+                      <TextField {...startProps} />
+                      <Box sx={{ mx: 2 }}> to </Box>
+                      <TextField {...endProps} />
+                    </>
+                  )}
                 />
               </LocalizationProvider>
             </Grid>
