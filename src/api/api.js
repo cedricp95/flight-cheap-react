@@ -12,7 +12,6 @@ export default function handler() {
   // Add a request interceptor
   instance.interceptors.request.use(function (config) {
     // Do something before request is sent
-    //console.log(config.headers,"headers")
     if (list_except_path_auth.indexOf(config.url) === -1){
       const token = sessionStorage.getItem("token"); 
         if (token !== null){
@@ -38,6 +37,10 @@ export default function handler() {
   }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    if (error.response.data.detail==="X-Token header expired"){
+      window.sessionStorage.clear();
+      window.location.reload();
+    }
     return Promise.reject(error);
   });
   //const instance = axios.default.baseUrl = "http://localhost:5000";
