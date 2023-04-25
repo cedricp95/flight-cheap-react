@@ -34,19 +34,18 @@ function SearchForm(props) {
 
   const [iataData, setIataData] = useState([]);
 
-  const [from, setFrom] = useState(null);
-  const [to, setTo] = useState(null);
+  const [fromValue, setFromValue] = useState(null);
+  const [toValue, setToValue] = useState(null);
 
-  // todo: add the post request to search for cheapest flight
-
-  const handleSubmit = () => {
-    // Send a POST request with the selected values
-    fetch("/my-api-endpoint", {
+  const handleButtonClick = async () => {
+    const response = await fetch("/api/my-endpoint", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to }),
+      body: JSON.stringify({ from: fromValue, to: toValue }),
     });
-    console.log(JSON.stringify({ from, to }));
+    const data = await response.json();
+    console.log("POST Request: " + data);
+    console.log("From: " + fromValue);
+    console.log("To: " + toValue);
   };
 
   const topPlaces = [
@@ -124,6 +123,9 @@ function SearchForm(props) {
               <Autocomplete
                 options={iataData}
                 getOptionLabel={(option) => option.CITY}
+                onChange={(event, newValue) => {
+                  setFromValue(newValue);
+                }}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="From" />
                 )}
@@ -134,6 +136,9 @@ function SearchForm(props) {
               <Autocomplete
                 options={iataData}
                 getOptionLabel={(option) => option.CITY}
+                onChange={(event, newValue) => {
+                  setToValue(newValue);
+                }}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="To" />
                 )}
@@ -192,16 +197,11 @@ function SearchForm(props) {
               />
             </Grid>
           </Grid>
-          <Button
-            color="primary"
-            size="large"
-            variant="outlined"
-            component="a"
-            sx={{ mt: 8 }}
-            onClick={handleSubmit}
-          >
-            Search Flights
-          </Button>
+          <Grid item xs={3}>
+            <Button variant="contained" onClick={handleButtonClick}>
+              Search
+            </Button>
+          </Grid>
         </Container>
       </Box>
     </Card>
