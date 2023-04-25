@@ -4,16 +4,48 @@ import { DataGrid } from "@mui/x-data-grid";
 export default function FixedSizeGrid(props) {
   const columns = [
     { field: "booking_token", headerName: "ID", width: 70 },
-    { field: "cityFrom", headerName: "cityFrom", width: 170 },
-    { field: "cityTo", headerName: "cityTo", width: 170 },
-    { field: "airlines_name", headerName: "Airlines name", width: 170 },
-    { field: "utc_arrival", headerName: "Arrival", width: 250 },
-    { field: "utc_departure", headerName: "Departure", width: 250 },
+    { field: "cityFrom", headerName: "From", width: 170 },
+    { field: "cityTo", headerName: "To", width: 170 },
+    { field: "airlines_name", headerName: "Airlines", width: 170 },
+    {
+      field: "utc_arrival",
+      headerName: "Arrival",
+      width: 250,
+      valueGetter: (params) => {
+        const utcDate = new Date(params.row.utc_arrival);
+        const localDate = new Date(
+          utcDate.toLocaleString("en-US", { timeZone: "Asia/Manila" })
+        );
+        const formattedDate = localDate.toLocaleString("en-US", {
+          timeZone: "Asia/Manila",
+          dateStyle: "medium",
+          timeStyle: "medium",
+        });
+        return formattedDate;
+      },
+    },
+    {
+      field: "utc_departure",
+      headerName: "Departure",
+      width: 250,
+      valueGetter: (params) => {
+        const utcDate = new Date(params.row.utc_departure);
+        const localDate = new Date(
+          utcDate.toLocaleString("en-US", { timeZone: "Asia/Manila" })
+        );
+        const formattedDate = localDate.toLocaleString("en-US", {
+          timeZone: "Asia/Manila",
+          dateStyle: "medium",
+          timeStyle: "medium",
+        });
+        return formattedDate;
+      },
+    },
     {
       field: "conversion",
       headerName: "Fare",
       width: 250,
-      valueGetter: (params) => params.row.conversion.PHP,
+      valueGetter: (params) => params.row.conversion.PHP.toLocaleString(),
     },
   ];
   const rows = [];
