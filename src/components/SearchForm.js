@@ -1,7 +1,15 @@
-import * as React from "react";
-import { Box } from "@mui/material";
-import { Container } from "@mui/material";
-import { Grid, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Container,
+  Grid,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Card,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Typography from "@mui/material/Typography";
@@ -10,18 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
-import dayjs from "dayjs";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { get_iata } from "@/api/auth";
-import { useEffect, useState } from "react";
-
-import Card from "@mui/material/Card";
-
-import { format, isValid } from "date-fns";
 
 function SearchForm(props) {
   useEffect(() => {
@@ -36,20 +33,8 @@ function SearchForm(props) {
   }, []);
 
   const [iataData, setIataData] = useState([]);
-
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
-
-  const sd = new Date();
-  const ed = new Date();
-  const endDate = ed.setDate(ed.getDate() + 5);
-
-  const [value, setValue] = React.useState([dayjs(sd), dayjs(endDate)]);
-
-  const handleDateRangePicker = (dd) => {
-    console.log("start date", dayjs(dd[0].$d).format("DD/MM/YYYY"));
-    console.log("end date", dayjs(dd[1].$d).format("DD/MM/YYYY"));
-  };
 
   const handleButtonClick = async () => {
     // const response = await fetch("/api/my-endpoint", {
@@ -60,11 +45,6 @@ function SearchForm(props) {
     // console.log("POST Request: " + data);
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
-
-    const selectedDateRange = value.map((date) =>
-      dayjs(date.$d).format("DD/MM/YYYY")
-    );
-    console.log("Selected date range:", selectedDateRange);
   };
 
   const topPlaces = [
@@ -84,12 +64,6 @@ function SearchForm(props) {
 
   const handleChange = (event) => {
     setTrip(event.target.value);
-  };
-
-  const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
-
-  const handleDateRangeChange = (dateRange) => {
-    setSelectedDateRange(dateRange);
   };
 
   return (
@@ -178,18 +152,9 @@ function SearchForm(props) {
               >
                 <DateRangePicker
                   localeText={{ start: "Check-in", end: "Check-out" }}
-                  value={value}
-                  onChange={(newValue) => handleDateRangePicker(newValue)}
                   slotProps={{
                     textField: { InputProps: { endAdornment: <Calendar /> } },
                   }}
-                  renderInput={(startProps, endProps) => (
-                    <>
-                      <TextField {...startProps} />
-                      <Box sx={{ mx: 2 }}> to </Box>
-                      <TextField {...endProps} />
-                    </>
-                  )}
                 />
               </LocalizationProvider>
             </Grid>
