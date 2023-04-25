@@ -1,11 +1,4 @@
-import {
-  Typography,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Button,
-  Select,
-} from "@mui/material";
+import React, { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import BannerSection from "../../components/BannerSection";
 import SearchForm from "../../components/SearchForm";
@@ -21,6 +14,8 @@ export default function Dashboard() {
     imageText: "plane img",
     linkText: "Book now",
   };
+
+  const [dataFlightSearch, setDataFlightSearch] = useState([]);
 
   return (
     <>
@@ -38,8 +33,8 @@ export default function Dashboard() {
           }}
         >
           <BannerSection banner={BannerSectionDetails} />
-          <SearchForm />
-          <SearchResults />
+          <SearchForm setDataFlightSearch={setDataFlightSearch} />
+          <SearchResults dataFlightSearch={dataFlightSearch}/>
           <div style={{ width: "100%", height: "100px" }}></div>
         </Box>
       </Layout>

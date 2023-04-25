@@ -18,46 +18,91 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
-import { get_iata } from "@/api/auth";
+
+import { get_iata,get_search_flights,get_airline_code } from "@/api/auth";
 import dayjs from "dayjs";
 
 function SearchForm(props) {
-  useEffect(() => {
-    get_iata()
-      .then((res) => {
-        setIataData(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   const [iataData, setIataData] = useState([]);
+  const [airlineData, setAirlineData] = useState({});
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
 
   const [selectedDates, setSelectedDates] = useState(null);
+  useEffect(() => {
+    get_iata()
+      .then((res) => {
+        setIataData(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    get_airline_code()
+      .then((res) => {
+        const data = {}
+        for (const i in res.data){
+          const res_data = res.data[i];
+          data[res_data.code] = res_data.name
+        }
+        setAirlineData(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });  
+  }, []);
+
+  
 
   const handleDateRangePicker = (dd) => {
     setSelectedDates(dd);
   };
 
   const handleButtonClick = async () => {
-    // const response = await fetch("/api/my-endpoint", {
-    //   method: "POST",
-    //   body: JSON.stringify({ from: fromValue, to: toValue }),
-    // });
-    // const data = await response.json();
-    // console.log("POST Request: " + data);
+
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
+    props.setDataFlightSearch([])
     if (selectedDates) {
       const startDate = dayjs(selectedDates[0]).format("DD/MM/YYYY");
       const endDate = dayjs(selectedDates[1]).format("DD/MM/YYYY");
       console.log("Selected start date:", startDate);
       console.log("Selected end date:", endDate);
+      get_search_flights([{
+        "from_city_code": fromValue.IATA_CODE,
+        "to_city_code": toValue.IATA_CODE,
+        "from_time": startDate,
+        "to_time": endDate
+      }]).then(async (res,req)=>{
+        
+        const row_data = await res.data.map(res_data=>{
+          
+          return res_data.route.map(res_data1=>{
+           
+            return {
+              "baglimit":res_data.baglimit,
+              "booking_token":res_data.booking_token,
+              "deep_link":res_data.deep_link,
+              "price":res_data.price,
+              "quality":res_data.quality,
+              "airlines_code":res_data1['airlines'],
+              "airlines_name":airlineData[res_data1['airlines']],
+              "cityFrom":res_data1['cityFrom'],
+              "cityTo":res_data1['cityTo'],
+              "conversion":res_data1['conversion'],
+              "fare":res_data1['fare'],
+              "facilitated_booking_available":res_data1['facilitated_booking_available'],
+              "utc_arrival":res_data1['utc_arrival'],
+              "utc_departure":res_data1['utc_departure'],
+            };
+          })
+          
+        })
+        props.setDataFlightSearch(row_data)
+      }).catch((e)=>{
+        
+      })
     }
+
   };
 
   const topPlaces = [
