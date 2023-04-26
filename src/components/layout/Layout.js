@@ -1,5 +1,5 @@
 import CameraIcon from "@mui/icons-material/PhotoCamera";
-import  { useState,useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Avatar,
@@ -21,11 +21,7 @@ import {
 import Image from "next/image";
 import { LocalAirport } from "@mui/icons-material";
 
-const exclude_pathname = [
-  'access/logout',
-  'access/login',
-  'about_us'
-]
+const exclude_pathname = ["access/logout", "access/login", "about_us"];
 
 function Copyright() {
   return (
@@ -46,12 +42,12 @@ function Layout(props) {
 
   const [isLogin, setLogin] = useState(true);
   useEffect(() => {
-    const pathname = window.location.pathname.replace(/(^\/|\/$)/g,"")
-    if (exclude_pathname.indexOf(pathname) === -1){
+    const pathname = window.location.pathname.replace(/(^\/|\/$)/g, "");
+    if (exclude_pathname.indexOf(pathname) === -1) {
       const token = sessionStorage.getItem("token");
-      setLogin(token !== null)
+      setLogin(token !== null);
     }
-    
+
     //setNotLogin(token===null);
   });
 
@@ -67,16 +63,12 @@ function Layout(props) {
             href="/"
             sx={{ my: 1, mx: 1.5, textDecoration: "none", flexGrow: 1 }}
           >
-            <Typography
-              variant="h6"
-              color="inherit"
-              noWrap
-            >
+            <Typography variant="h6" color="inherit" noWrap>
               FlightCheap
             </Typography>
           </Link>
           <nav>
-          <Link
+            <Link
               variant="button"
               color="inherit"
               href="/dashboard"
@@ -103,18 +95,25 @@ function Layout(props) {
           </nav>
         </Toolbar>
       </AppBar>
-    {isLogin?
-    <>
-      <main>{props.children}</main>
-    </>:
-    <>
-    <Link color="inherit" href="/access/login">
-                Sign in 
-              </Link>
-    </>}
-      
+      {isLogin ? (
+        <>
+          <main>{props.children}</main>
+        </>
+      ) : (
+        <>
+          <Link color="inherit" href="/access/login">
+            Sign in
+          </Link>
+        </>
+      )}
+
       {/* Footer */}
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        sx={{ bgcolor: "#c5e1ec" }}
+        justifyContent="center"
+        alignItems="center"
+      >
         <Image
           src={FlightCheapLogoOnlyTransparent}
           alt="Cheap Flight Logo"
@@ -124,7 +123,7 @@ function Layout(props) {
       </Box>
 
       <Box
-        sx={{ bgcolor: "background.paper", p: 1 }}
+        sx={{ bgcolor: "#c5e1ec" }}
         component="footer"
         alignContent="flex-start"
         alignItems="flex-start"
