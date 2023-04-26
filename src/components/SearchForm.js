@@ -37,7 +37,6 @@ function SearchForm(props) {
   const [datePickerOpen, setDatePickerOpen] = useState(true);
   const [dateRange, setDateRange] = useState(DateRange);
 
-  const [selectedDates, setSelectedDates] = useState(null);
   useEffect(() => {
     get_iata()
       .then((res) => {
@@ -60,17 +59,15 @@ function SearchForm(props) {
       });
   }, []);
 
-  const handleDateRangePicker = (dd) => {
-    setSelectedDates(dd);
-  };
-
   const handleButtonClick = async () => {
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
     props.setDataFlightSearch([]);
-    if (selectedDates) {
-      const startDate = dayjs(selectedDates[0]).format("DD/MM/YYYY");
-      const endDate = dayjs(selectedDates[1]).format("DD/MM/YYYY");
+    console.log(dateRange);
+    
+    if (dateRange) {
+      const startDate = dayjs(dateRange.startDate).format("DD/MM/YYYY");
+      const endDate = dayjs(dateRange.endDate).format("DD/MM/YYYY");
       console.log("Selected start date:", startDate);
       console.log("Selected end date:", endDate);
       get_search_flights([
