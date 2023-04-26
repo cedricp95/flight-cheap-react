@@ -34,7 +34,7 @@ export default function Dashboard() {
         >
           <BannerSection banner={BannerSectionDetails} />
           <SearchForm setDataFlightSearch={setDataFlightSearch} />
-          <SearchResults dataFlightSearch={dataFlightSearch}/>
+          <SearchResults dataFlightSearch={dataFlightSearch} />
           <div style={{ width: "100%", height: "100px" }}></div>
         </Box>
       </Layout>
