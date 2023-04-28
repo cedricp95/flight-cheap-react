@@ -14,15 +14,9 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Typography from "@mui/material/Typography";
 import { LocalAirport } from "@mui/icons-material";
-import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
-
-
-import "react-datepicker/dist/react-datepicker.css";
-
-
-// import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-// import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-// import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers-pro";
+import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
+import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
 
 import { get_iata, get_search_flights, get_airline_code } from "@/api/auth";
@@ -34,9 +28,7 @@ function SearchForm(props) {
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
 
-  const [datePickerOpen, setDatePickerOpen] = useState(true);
-  const [dateRange, setDateRange] = useState(DateRange);
-
+  const [selectedDates, setSelectedDates] = useState(null);
   useEffect(() => {
     get_iata()
       .then((res) => {
@@ -59,15 +51,17 @@ function SearchForm(props) {
       });
   }, []);
 
+  const handleDateRangePicker = (dd) => {
+    setSelectedDates(dd);
+  };
+
   const handleButtonClick = async () => {
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
     props.setDataFlightSearch([]);
-    console.log(dateRange);
-    
-    if (dateRange) {
-      const startDate = dayjs(dateRange.startDate).format("DD/MM/YYYY");
-      const endDate = dayjs(dateRange.endDate).format("DD/MM/YYYY");
+    if (selectedDates) {
+      const startDate = dayjs(selectedDates[0]).format("DD/MM/YYYY");
+      const endDate = dayjs(selectedDates[1]).format("DD/MM/YYYY");
       console.log("Selected start date:", startDate);
       console.log("Selected end date:", endDate);
       get_search_flights([
@@ -179,26 +173,6 @@ function SearchForm(props) {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={3}>
-              <DateRangePicker
-                open={datePickerOpen}
-                onChange={range => setDateRange(range)}
-              />
-              {/* <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                sx={{ paddingTop: 0 }}
-              >
-                <DateRangePicker
-                  localeText={{ start: "Check-in", end: "Check-out" }}
-                  slotProps={{
-                    textField: { InputProps: { endAdornment: <Calendar /> } },
-                  }}
-                  onChange={(newValue) => handleDateRangePicker(newValue)}
-                />
-              </LocalizationProvider> */}
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={3}>
               <Autocomplete
                 options={iataData}
                 getOptionLabel={(option) => option.CITY}
@@ -224,7 +198,20 @@ function SearchForm(props) {
               />
             </Grid>
 
-            
+            <Grid item xs={6}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                sx={{ paddingTop: 0 }}
+              >
+                <DateRangePicker
+                  localeText={{ start: "Check-in", end: "Check-out" }}
+                  slotProps={{
+                    textField: { InputProps: { endAdornment: <Calendar /> } },
+                  }}
+                  onChange={(newValue) => handleDateRangePicker(newValue)}
+                />
+              </LocalizationProvider>
+            </Grid>
           </Grid>
 
           <Grid container spacing={0} sx={{ marginTop: 3 }}>
