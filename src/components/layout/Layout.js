@@ -105,6 +105,7 @@ function Layout(props) {
         sx={{ bgcolor: "#c5e1ec" }}
         justifyContent="center"
         alignItems="center"
+        pt={4}
       >
         <Image
           src={FlightCheapLogoOnlyTransparent}
