@@ -71,14 +71,6 @@ function Layout(props) {
             <Link
               variant="button"
               color="inherit"
-              href="/dashboard"
-              sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
-            >
-              Dashboard
-            </Link>
-            <Link
-              variant="button"
-              color="inherit"
               href="/contact-us"
               sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
             >
