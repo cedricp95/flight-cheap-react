@@ -76,7 +76,7 @@ export default function FixedSizeGrid(props) {
           color: "black",
           margin: "20px 0",
           padding: "10px",
-          bgcolor: "rgba(128, 128, 128, 0.5)",
+          bgcolor: "rgba(37, 198, 218, 0.5)",
         }}
       >
         <Typography variant="h3">Search Results</Typography>
