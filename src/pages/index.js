@@ -32,7 +32,7 @@ export default function Dashboard() {
             backgroundImage: `url(/banner2.jpg)`,
           }}
         >
-          <BannerSection banner={BannerSectionDetails} />
+          {/* <BannerSection banner={BannerSectionDetails} /> */}
           <SearchForm setDataFlightSearch={setDataFlightSearch} />
           <SearchResults dataFlightSearch={dataFlightSearch} />
           <div style={{ width: "100%", height: "100px" }}></div>
