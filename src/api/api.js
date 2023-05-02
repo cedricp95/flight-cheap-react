@@ -18,6 +18,7 @@ export default function handler() {
         } else {
           window.sessionStorage.clear();
           alert("Session has expired, please try to login again");
+          window.location.href = "/access/login"; // add this line
         }
       }
 
