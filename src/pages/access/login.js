@@ -19,7 +19,7 @@ export default function Login() {
     login(username, password)
       .then((res, req) => {
         sessionStorage.setItem("token", res.data.token);
-        Router.push("/dashboard");
+        Router.push("/");
       })
       .catch((e) => {
         alert(e.response.data.detail);
