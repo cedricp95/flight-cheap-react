@@ -131,7 +131,6 @@ function SearchForm(props) {
                 id="filled-number"
                 label="Adults"
                 type="number"
-                margin="filled-number"
                 sx={{ width: 1 }}
               />
             </Grid>

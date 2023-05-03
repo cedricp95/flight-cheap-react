@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Modal from "../components/Modal";
 
 function BannerSection(props) {
   const { banner } = props;
@@ -53,23 +54,33 @@ function BannerSection(props) {
               component="h1"
               variant="h2"
               color="inherit"
-              fontWeight={600} 
+              fontWeight={600}
             >
               {banner.title}
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
               {banner.description}
             </Typography>
-            <Button
-              color="primary"
-              size="large"
-              variant="contained"
-              component="a"
-              href=""
-              sx={{ mt: 8 }}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyItems: "center",
+                marginTop: "50px",
+              }}
             >
-              {banner.linkText}
-            </Button>
+              <Button
+                color="primary"
+                size="large"
+                variant="contained"
+                component="a"
+                href=""
+                sx={{ mr: 3 }}
+              >
+                {banner.linkText}
+              </Button>
+              <Modal />
+            </div>
           </Box>
         </Grid>
       </Grid>
