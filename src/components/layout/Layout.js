@@ -19,7 +19,7 @@ import {
   AppBar,
 } from "@mui/material";
 import Image from "next/image";
-import { LocalAirport } from "@mui/icons-material";
+import { LocalAirport, Lock } from "@mui/icons-material";
 
 const exclude_pathname = ["access/logout", "access/login", "about_us"];
 
@@ -68,14 +68,29 @@ function Layout(props) {
             </Typography>
           </Link>
           <nav>
-            <Link
-              variant="button"
-              color="inherit"
-              href="/dashboard"
-              sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
-            >
-              Dashboard
-            </Link>
+            {isLogin ? (
+              <>
+                <Link
+                  variant="button"
+                  color="inherit"
+                  href="/#"
+                  sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
+                >
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  variant="button"
+                  color="inherit"
+                  href="/access/login"
+                  sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+              </>
+            )}
             <Link
               variant="button"
               color="inherit"
@@ -113,6 +128,7 @@ function Layout(props) {
         sx={{ bgcolor: "#c5e1ec" }}
         justifyContent="center"
         alignItems="center"
+        pt={4}
       >
         <Image
           src={FlightCheapLogoOnlyTransparent}
