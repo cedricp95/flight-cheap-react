@@ -16,9 +16,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Typography from "@mui/material/Typography";
 import { LocalAirport } from "@mui/icons-material";
-// import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-// import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-// import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import Calendar from "@mui/icons-material/Event";
 
 import "react-date-range/dist/styles.css"; // main style file
@@ -31,6 +28,8 @@ function SearchForm(props) {
   const [airlineData, setAirlineData] = useState({});
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
+  const [startDateValue, setStartDateValue] = useState(null);
+  const [endDateValue, setEndDateValue] = useState(null);
 
   useEffect(() => {
     get_iata()
