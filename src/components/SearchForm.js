@@ -77,8 +77,8 @@ function SearchForm(props) {
         {
           from_city_code: fromValue.IATA_CODE,
           to_city_code: toValue.IATA_CODE,
-          from_time: startDate,
-          to_time: endDate,
+          from_time: startDate.toLocaleDateString("en-GB"),
+          to_time: endDate.toLocaleDateString("en-GB"),
         },
       ])
         .then(async (res, req) => {
