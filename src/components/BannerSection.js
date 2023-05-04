@@ -1,10 +1,7 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Paper, Typography, Grid, Box, Button } from "@mui/material";
+import Image from "next/image";
 
 function BannerSection(props) {
   const { banner } = props;
@@ -24,7 +21,7 @@ function BannerSection(props) {
     >
       {/* Increase the priority of the hero background image */}
       {
-        <img
+        <Image
           style={{ display: "none" }}
           src={banner.image}
           alt={banner.imageText}
@@ -53,7 +50,7 @@ function BannerSection(props) {
               component="h1"
               variant="h2"
               color="inherit"
-              fontWeight={600} 
+              fontWeight={600}
             >
               {banner.title}
             </Typography>
