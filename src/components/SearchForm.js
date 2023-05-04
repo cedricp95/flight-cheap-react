@@ -62,6 +62,16 @@ function SearchForm(props) {
   ]);
 
   const handleButtonClick = async () => {
+    if (!fromValue || !fromValue.IATA_CODE) {
+      // handle error when textbox is empty
+      console.log("From textbox is empty");
+      return;
+    }
+    if (!toValue || !toValue.IATA_CODE) {
+      // handle error when textbox is empty
+      console.log("To textbox is empty");
+      return;
+    }
     console.log("From: " + JSON.stringify(fromValue.IATA_CODE));
     console.log("To: " + JSON.stringify(toValue.IATA_CODE));
     props.setDataFlightSearch([]);
