@@ -39,7 +39,7 @@ function NotificationModal() {
   return (
     <>
       <Button
-        color="secondary"
+        color="inherit"
         size="large"
         variant="contained"
         component="a"

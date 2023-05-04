@@ -67,6 +67,7 @@ function BannerSection(props) {
                 alignItems: "center",
                 justifyItems: "center",
                 marginTop: "50px",
+                color: "#1976d2"
               }}
             >
               <Button
