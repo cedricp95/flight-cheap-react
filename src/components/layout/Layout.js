@@ -1,4 +1,3 @@
-import CameraIcon from "@mui/icons-material/PhotoCamera";
 import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
@@ -42,14 +41,11 @@ function Layout(props) {
 
   const [isLogin, setLogin] = useState(true);
   useEffect(() => {
-    const pathname = window.location.pathname.replace(/(^\/|\/$)/g, "");
-    if (exclude_pathname.indexOf(pathname) === -1) {
-      const token = sessionStorage.getItem("token");
-      setLogin(token !== null);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setLogin(true);
     }
-
-    //setNotLogin(token===null);
-  });
+  }, [setLogin]); // Add setLogin as a dependency
 
   return (
     <ThemeProvider theme={theme}>
