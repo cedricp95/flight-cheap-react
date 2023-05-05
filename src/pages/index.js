@@ -4,6 +4,7 @@ import BannerSection from "../components/BannerSection";
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 import Box from "@mui/material/Box";
+import Modal from "../components/Modal";
 
 export default function Dashboard() {
   const BannerSectionDetails = {
@@ -33,6 +34,7 @@ export default function Dashboard() {
           }}
         >
           {/* <BannerSection banner={BannerSectionDetails} /> */}
+          <Modal />
           <SearchForm setDataFlightSearch={setDataFlightSearch} />
           <SearchResults dataFlightSearch={dataFlightSearch} />
           <div style={{ width: "100%", height: "100px" }}></div>
