@@ -260,7 +260,7 @@ function SearchForm(props) {
             <Grid item xs={6}>
               {/* Third row */}
               <DateRangePicker
-                // minDate={new Date()}
+                minDate={new Date()}
                 ranges={dateRange}
                 onChange={(ranges) => setDateRange([ranges.selection])}
               />
