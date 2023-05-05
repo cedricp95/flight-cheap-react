@@ -166,18 +166,15 @@ function SearchForm(props) {
                 mb: 2,
               }}
             >
-              <FormControl fullWidth>
+              <FormControl required defaultValue="One Way" fullWidth>
                 <InputLabel id="demo-simple-select-autowidth-label">
-                  Trip
+                  Booking Options
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-autowidth-label"
-                  id="demo-simple-select-autowidth"
                   value={trip}
                   onChange={handleChange}
                   autoWidth
                   label="Trip"
-                  ContainerProps={{ style: { width: "100%" } }}
                 >
                   <MenuItem value={21}>One Way</MenuItem>
                   <MenuItem value={10}>Round-trip</MenuItem>
@@ -193,10 +190,10 @@ function SearchForm(props) {
                 mb: 2,
               }}
             >
-              <LocalAirport />
+              {/* <LocalAirport />
               <Typography variant="h5" marked="center" component="h5">
                 Flight
-              </Typography>
+              </Typography> */}
             </Grid>
           </Grid>
 
