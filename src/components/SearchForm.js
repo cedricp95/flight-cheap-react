@@ -145,8 +145,8 @@ function SearchForm(props) {
   };
 
   return (
-    <Card sx={{ maxWidth: "80%", margin: "50px auto" }}>
-      <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
+    <Card sx={{ maxWidth: "80%", margin: "50px auto", marginTop: -90, backgroundColor: 'white' }}>
+      <Box component="section" sx={{ display: "flex", overflow: "hidden"}}>
         <Container
           sx={{
             mb: 5,
@@ -154,6 +154,9 @@ function SearchForm(props) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            borderRadius: 5,
+            padding: 5,
           }}
         >
           <Grid container spacing={2} sx={{ marginTop: 3, mb: 4 }}>
@@ -175,6 +178,8 @@ function SearchForm(props) {
                   onChange={handleChange}
                   autoWidth
                   label="Trip"
+                  variant="filled"
+                  color="white"
                 >
                   <MenuItem value={21}>One Way</MenuItem>
                   <MenuItem value={10}>Round-trip</MenuItem>
@@ -216,6 +221,7 @@ function SearchForm(props) {
                 label="Adults"
                 type="number"
                 sx={{ width: 1, mt: 5 }}
+                variant="filled"
               />
               <TextField
                 id="filled-number"

@@ -28,9 +28,11 @@ function BookingItem({ booking }) {
         sx={{
           my: 3,
           py: 2.5,
-          border: 2,
           borderRadius: 5,
-          cursor: "pointer"
+          borderTop: 7,
+          borderTopColor:  "#1976d2",
+          cursor: "pointer",
+          boxShadow: 1 
         }}
       >
         {booking.status &&
