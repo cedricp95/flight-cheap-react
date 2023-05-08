@@ -50,7 +50,7 @@ function Layout(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar position="fixed">
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <LocalAirport />
           <Link
@@ -87,6 +87,14 @@ function Layout(props) {
                 </Link>
               </>
             )}
+            <Link
+              variant="button"
+              color="inherit"
+              href="/bookings"
+              sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
+            >
+              Bookings
+            </Link>
             <Link
               variant="button"
               color="inherit"
