@@ -30,6 +30,7 @@ function SearchForm(props) {
   const [toValue, setToValue] = useState(null);
   const [startDateValue, setStartDateValue] = useState(null);
   const [endDateValue, setEndDateValue] = useState(null);
+  const [trip, setTrip] = React.useState(10);
 
   useEffect(() => {
     get_iata()
@@ -83,14 +84,36 @@ function SearchForm(props) {
           "en-GB"
         )} - ${endDate.toLocaleDateString("en-GB")}`
       );
-      get_search_flights([
-        {
-          from_city_code: fromValue.IATA_CODE,
-          to_city_code: toValue.IATA_CODE,
-          from_time: startDate.toLocaleDateString("en-GB"),
-          to_time: endDate.toLocaleDateString("en-GB"),
-        },
-      ])
+
+      let dataSearchFlights = [];
+
+      if (trip===10){
+        dataSearchFlights = [
+          {
+            from_city_code: fromValue.IATA_CODE,
+            to_city_code: toValue.IATA_CODE,
+            from_time: startDate.toLocaleDateString("en-GB"),
+            to_time: endDate.toLocaleDateString("en-GB"),
+          },
+          {
+            from_city_code: toValue.IATA_CODE,
+            to_city_code: fromValue.IATA_CODE,
+            from_time: startDate.toLocaleDateString("en-GB"),
+            to_time: endDate.toLocaleDateString("en-GB"),
+          },
+        ]
+      }
+      if (trip===21){
+        dataSearchFlights = [
+          {
+            from_city_code: fromValue.IATA_CODE,
+            to_city_code: toValue.IATA_CODE,
+            from_time: startDate.toLocaleDateString("en-GB"),
+            to_time: endDate.toLocaleDateString("en-GB"),
+          },
+        ]
+      }
+      get_search_flights(dataSearchFlights)
         .then(async (res, req) => {
           const row_data = await res.data.map((res_data) => {
             return res_data.route.map((res_data1) => {
@@ -141,7 +164,6 @@ function SearchForm(props) {
     { label: "First Class", id: "F" },
   ];
 
-  const [trip, setTrip] = React.useState("");
 
   const handleChange = (event) => {
     setTrip(event.target.value);
