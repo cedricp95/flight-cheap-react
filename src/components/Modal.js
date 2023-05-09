@@ -1,4 +1,5 @@
 import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -28,6 +29,39 @@ function NotificationModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneError, setPhoneError] = useState(null);
+  const [error, setError] = useState(null);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  useEffect(() => {
+    validatePhone();
+  }, [phone]);
+
+  useEffect(() => {
+    validateEmail();
+  }, [email]);
+
+  const validatePhone = () => {
+    if (phone?.length < 5) {
+      setPhoneError(true);
+    } else {
+      setPhoneError(false);
+    }
+  };
+
+  const validateEmail = () => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  };
 
   const [phone, setValue] = React.useState("");
 
