@@ -4,6 +4,8 @@ import BannerSection from "../components/BannerSection";
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 
+import Modal from "../components/Modal";
+
 import { Box } from "@mui/material";
 
 import Image from 'next/image';
@@ -46,6 +48,8 @@ export default function Dashboard() {
             backgroundImage: `url(/banner2.jpg)`,
           }}
         >
+          {/* <BannerSection banner={BannerSectionDetails} /> */}
+          <Modal />
           <Carousel
             showArrows={false}
             showIndicators={false}
