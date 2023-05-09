@@ -8,17 +8,17 @@ import Modal from "../components/Modal";
 
 import { Box } from "@mui/material";
 
-import Image from 'next/image';
- 
+import Image from "next/image";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 
 var settings = {
   dots: false,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
-  slidesToScroll: 1
+  slidesToScroll: 1,
 };
 
 export default function Dashboard() {
@@ -49,7 +49,6 @@ export default function Dashboard() {
           }}
         >
           {/* <BannerSection banner={BannerSectionDetails} /> */}
-          <Modal />
           <Carousel
             showArrows={false}
             showIndicators={false}
@@ -60,19 +59,21 @@ export default function Dashboard() {
             infiniteLoop={true}
             stopOnHover={false}
           >
-            <div style={{width: '100%', height: 800}}>
-              <Image src="/banner/1.jpeg" alt="1" fill={true}/>
+            <div style={{ width: "100%", height: 800 }}>
+              <Image src="/banner/1.jpeg" alt="1" fill={true} />
             </div>
-            <div  style={{width: '100%', height: 800}}>
-              <Image src="/banner/3.jpeg" alt="3" fill={true}/>
+            <div style={{ width: "100%", height: 800 }}>
+              <Image src="/banner/3.jpeg" alt="3" fill={true} />
             </div>
-            <div  style={{width: '100%', height: 800}}>
-              <Image src="/banner/4.jpeg" alt="4" fill={true}/>
+            <div style={{ width: "100%", height: 800 }}>
+              <Image src="/banner/4.jpeg" alt="4" fill={true} />
             </div>
-            <div  style={{width: '100%', height: 800}}>
-              <Image src="/banner/5.jpeg" alt="5" fill={true}/>
+            <div style={{ width: "100%", height: 800 }}>
+              <Image src="/banner/5.jpeg" alt="5" fill={true} />
             </div>
           </Carousel>
+
+          <Modal />
           <SearchForm setDataFlightSearch={setDataFlightSearch} />
           <SearchResults dataFlightSearch={dataFlightSearch} />
           <div style={{ width: "100%", height: "100px" }}></div>
