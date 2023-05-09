@@ -8,11 +8,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import EmailIcon from "@mui/icons-material/Email";
 import { Container, Grid, Card } from "@mui/material";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 import { subscribe_email, subscribe_sms } from "@/api/auth";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,14 +27,22 @@ const style = {
 };
 
 function NotificationModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setEmail("");
+    setPhone("");
+    setStatus(false);
+    setOpen(false);
+  };
 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [phoneError, setPhoneError] = useState(null);
   const [error, setError] = useState(null);
+  const [isSuccess, setStatus] = useState(false);
+  const [isFetching, setLoading] = useState(false);
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -160,7 +169,7 @@ function NotificationModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} component="form" noValidate autoComplete="off">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Get latest deals!
           </Typography>
@@ -168,37 +177,19 @@ function NotificationModal() {
             Fly high, pay low with our unbeatable flight deals. Subscribe now!
           </Typography>
 
-          <Typography sx={{ mt: 2, mb: 1 }} component="label">
-            SMS
-          </Typography>
-          <PhoneInput
-            placeholder="SMS"
-            country={"ph"}
-            value={phone}
-            onChange={(phone) => setValue(phone)}
-          />
-          <TextField
-            sx={{ mt: 4, width: "90%" }}
-            id="input-with-icon-textfield"
-            label="Email Address"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <EmailIcon />
-                </InputAdornment>
-              ),
-            }}
-            variant="standard"
-          />
+          {formRender}
+
           <Button
+            disabled={error || phoneError}
             color="primary"
             size="large"
             variant="contained"
             component="a"
-            href=""
             sx={{ mt: 5 }}
+            onClick={handleButtonClick}
           >
-            Get Notified
+            {isSuccess ? "Done" : "Get Notified"}
+            {spinner}
           </Button>
           <FormHelperText sx={{ mt: 2 }} id="my-helper-text">
             We'll never share your email/number.
