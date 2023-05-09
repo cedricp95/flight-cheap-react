@@ -192,7 +192,7 @@ function NotificationModal() {
             {spinner}
           </Button>
           <FormHelperText sx={{ mt: 2 }} id="my-helper-text">
-            We'll never share your email/number.
+            We&aposll never share your email/number.
           </FormHelperText>
         </Box>
       </Modal>
