@@ -1,8 +1,14 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Typography, Box } from "@mui/material";
+import { Typography,Button, Box } from "@mui/material";
+
+import { useBookingContext } from "@/context/booking";
+import { useRouter } from 'next/router'
 
 export default function FixedSizeGrid(props) {
+  const router = useRouter()  
+  const [booking, setBooking] = useBookingContext();
+
   const columns = [
     { field: "booking_token", headerName: "ID", width: 70 },
     { field: "cityFrom", headerName: "From", width: 170 },
@@ -49,8 +55,23 @@ export default function FixedSizeGrid(props) {
       width: 250,
       valueGetter: (params) => params.row.conversion.PHP.toLocaleString(),
     },
+    {
+      field: "action",
+      headerName: "Action",
+      sortable: false,
+      renderCell: (params) => {
+        const onClick = (e) => {
+          e.stopPropagation(); // don't select this row after clicking
+          setBooking(params.row);
+          router.push('/booking/select');
+        };
+        return <Button onClick={onClick}>Book now</Button>;
+      }
+    },
   ];
+
   const rows = [];
+
   for (var i in props.dataFlightSearch) {
     const dataRow = props.dataFlightSearch[i];
     for (var i1 in dataRow) {
@@ -66,6 +87,8 @@ export default function FixedSizeGrid(props) {
       });
     }
   }
+
+
   return (
     <>
       <Box

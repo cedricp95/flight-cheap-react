@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {whereNot} from 'structkit'
 import {
   Box,
   Container,
@@ -9,14 +10,11 @@ import {
   MenuItem,
   Select,
   Card,
+  TextField,
+  Autocomplete
 } from "@mui/material";
 
 import { DateRangePicker } from "react-date-range";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import Typography from "@mui/material/Typography";
-import { LocalAirport } from "@mui/icons-material";
-import Calendar from "@mui/icons-material/Event";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -24,7 +22,8 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { get_iata, get_search_flights, get_airline_code } from "@/api/auth";
 
 function SearchForm(props) {
-  const [iataData, setIataData] = useState([]);
+  const [iataDataFrom, setIataDataFrom] = useState([]);
+  const [iataDataTo, setIataDataTo] = useState([]);
   const [airlineData, setAirlineData] = useState({});
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
@@ -35,7 +34,7 @@ function SearchForm(props) {
   useEffect(() => {
     get_iata()
       .then((res) => {
-        setIataData(res.data);
+        setIataDataFrom(res.data);
       })
       .catch((error) => {
         console.error(error);
@@ -170,8 +169,8 @@ function SearchForm(props) {
   };
 
   return (
-    <Card sx={{ maxWidth: "80%", margin: "50px auto" }}>
-      <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
+    <Card sx={{ maxWidth: "80%", margin: "50px auto", marginTop: -90, backgroundColor: 'white' }}>
+      <Box component="section" sx={{ display: "flex", overflow: "hidden"}}>
         <Container
           sx={{
             mb: 5,
@@ -179,65 +178,88 @@ function SearchForm(props) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            borderRadius: 5,
+            padding: 5,
           }}
         >
           <Grid container spacing={2} sx={{ marginTop: 3, mb: 4 }}>
             <Grid
               item
-              xs={3}
+              xs={6}
               sx={{
                 display: "flex",
                 alignItems: "center",
                 mb: 2,
               }}
             >
-              <LocalAirport />
+              <FormControl required defaultValue="One Way" fullWidth>
+                <InputLabel id="demo-simple-select-autowidth-label">
+                  Booking Options
+                </InputLabel>
+                <Select
+                  value={trip}
+                  onChange={handleChange}
+                  autoWidth
+                  label="Trip"
+                  variant="filled"
+                  color="white"
+                >
+                  <MenuItem value={21}>One Way</MenuItem>
+                  <MenuItem value={10}>Round-trip</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                mb: 2,
+              }}
+            >
+              {/* <LocalAirport />
               <Typography variant="h5" marked="center" component="h5">
                 Flight
-              </Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <div>
-                <FormControl
-                  variant="filled"
-                  sx={{ m: 1, minWidth: 80, borderBottom: "none" }}
-                  margin="normal"
-                >
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Trip
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-autowidth-label"
-                    id="demo-simple-select-autowidth"
-                    value={trip}
-                    onChange={handleChange}
-                    autoWidth
-                    label="Trip"
-                  >
-                    <MenuItem value={10}>Round-trip</MenuItem>
-                    <MenuItem value={21}>One Way</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+              </Typography> */}
             </Grid>
           </Grid>
+
           <Grid container spacing={2}>
             <Grid item xs={3}>
+              {/* First row */}
+
               <Autocomplete
-                options={iataData}
+                options={iataDataFrom}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setFromValue(newValue);
+                  setIataDataTo(whereNot(iataDataFrom,newValue));
                 }}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="From" />
                 )}
               />
+              <TextField
+                id="filled-number"
+                label="Adults"
+                type="number"
+                sx={{ width: 1, mt: 5 }}
+                variant="filled"
+              />
+              <TextField
+                id="filled-number"
+                label="Children"
+                type="number"
+                sx={{ width: 1, mt: 5 }}
+              />
             </Grid>
 
             <Grid item xs={3}>
+              {/* Second row */}
               <Autocomplete
-                options={iataData}
+                options={iataDataTo}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setToValue(newValue);
@@ -246,44 +268,12 @@ function SearchForm(props) {
                   <TextField sx={{ width: 1 }} {...params} label="To" />
                 )}
               />
-            </Grid>
-
-            <Grid item xs={6}>
-              <div>
-                <DateRangePicker
-                  ranges={dateRange}
-                  onChange={(ranges) => setDateRange([ranges.selection])}
-                />
-              </div>
-            </Grid>
-          </Grid>
-
-          <Grid container spacing={0} sx={{ marginTop: 3 }}>
-            <Grid item xs={3}>
               <TextField
-                id="filled-number"
-                label="Adults"
-                type="number"
-                sx={{ width: 1 }}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                sx={{ width: 1 }}
-                id="filled-number"
-                label="Children"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                sx={{ width: 1 }}
                 id="filled-number"
                 label="Infant"
                 type="number"
+                sx={{ width: 1, mt: 5 }}
               />
-            </Grid>
-            <Grid item xs={3}>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -291,9 +281,20 @@ function SearchForm(props) {
                 renderInput={(params) => (
                   <TextField {...params} label="Cabin Class" />
                 )}
+                sx={{ width: 1, mt: 5 }}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              {/* Third row */}
+              <DateRangePicker
+                minDate={new Date()}
+                ranges={dateRange}
+                onChange={(ranges) => setDateRange([ranges.selection])}
               />
             </Grid>
           </Grid>
+
           <Grid item xs={3}>
             <Button
               variant="contained"
