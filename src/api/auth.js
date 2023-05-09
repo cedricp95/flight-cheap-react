@@ -22,3 +22,11 @@ export async function get_airline_code() {
 export async function get_search_flights(data) {
     return await api().post("/search_flights/",data);
 }
+
+export async function subscribe_sms(data) {
+  return await api().post("/send_sms/",data);
+}
+
+export async function subscribe_email(data) {
+  return await api().post("/send_email/",data);
+}

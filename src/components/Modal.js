@@ -1,4 +1,3 @@
-import * as React from "react";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,6 +12,7 @@ import { Container, Grid, Card } from "@mui/material";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+import { subscribe_email, subscribe_sms } from "@/api/auth";
 const style = {
   position: "absolute",
   top: "50%",
@@ -63,7 +63,72 @@ function NotificationModal() {
     }
   };
 
-  const [phone, setValue] = React.useState("");
+  const handleButtonClick = async () => {
+    if (isSuccess) return handleClose();
+
+    setLoading(true);
+
+    const smsAPI = subscribe_sms({
+      body: "Thank you for subscribing to our cheapest flight!",
+    });
+
+    const emailAPI = subscribe_email({
+      to_email: email,
+      subject: "subscription",
+      html_content: "string",
+    });
+
+    Promise.all([emailAPI, smsAPI])
+      .then((response) => {
+        setStatus(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+  let formRender = "";
+  let spinner = false;
+  if (isFetching) {
+    spinner = (
+      <CircularProgress
+        color="inherit"
+        sx={{ height: "25px !important", width: "25px !important", ml: 1 }}
+      />
+    );
+  }
+  if (!isSuccess) {
+    formRender = (
+      <div>
+        <Typography sx={{ mt: 2, mb: 1 }} component="label">
+          SMS
+        </Typography>
+        <PhoneInput
+          placeholder="SMS"
+          country={"ph"}
+          value={phone}
+          onChange={(phone) => setPhone(phone)}
+        />
+        <TextField
+          sx={{ mt: 4, width: "90%" }}
+          id="input-with-icon-textfield"
+          label="Email Address"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon />
+              </InputAdornment>
+            ),
+          }}
+          value={email}
+          onChange={handleEmailChange}
+          variant="standard"
+        />
+      </div>
+    );
+  } else {
+    formRender = `Congratulations! You have successfully subscribed to our Cheap Flight Deals.`;
+  }
 
   return (
     <>
