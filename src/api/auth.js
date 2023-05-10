@@ -20,7 +20,7 @@ export async function get_airline_code() {
 }
 
 export async function get_search_flights(data) {
-    return await api().post("/search_flights/",data);
+  return await api().post("/search_flights/",data);
 }
 
 export async function subscribe_sms(data) {
@@ -29,4 +29,16 @@ export async function subscribe_sms(data) {
 
 export async function subscribe_email(data) {
   return await api().post("/send_email/",data);
+}
+
+export async function post_booking_users(data) {
+  return await api().post("/booking/users/",data);
+}
+
+export async function post_booking_payment(data) {
+  return await api().post("/booking/payment/",data);
+}
+
+export async function post_booking_final(data) {
+  return await api().post("/booking/final/",data);
 }

@@ -6,15 +6,37 @@ import { Grid, TextField, FormControlLabel, Checkbox, Container, Typography, Box
 
 // import { useBookingContext } from "@/context/booking";
 import { useRouter } from 'next/router'
-
+import { post_booking_users,post_booking_payment,post_booking_final } from "@/api/auth";
 import BookingItem from "@/components/BookingItem";
+import BookingVerificationModal from "@/components/BookingVerificationModal";
 
 function SelectFlight() {
   const router = useRouter()
-    
- 
+
+  const [creditCardName, setCreditCardName] = useState("");
+  const [creditCardNo, setCreditCardNo] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [expiration, setExpiration] = useState("");
+  const [isModal, setIsModal] = useState(false);
+
+  const bookingUserInfo = localStorage.getItem("booking_user_info");  
+  const paymentSubmit = ()=>{
+    post_booking_payment({
+        "credit_card_no": creditCardNo,
+        "cvv": cvv,
+        "expiration": expiration
+    }).then(val=>{
+      window.localStorage.setItem("booking_payment_info",val.data.token);
+      //props.router.push('/bookings');
+      setIsModal(true);
+    }).catch((e) => {
+      alert(e.response.data.detail);
+    });
+  }
+
   return (
     <Layout>
+      <BookingVerificationModal isModal={isModal} router = {router} setIsModal={setIsModal}/>
      <Container
         sx={{
           pt: 15,
@@ -35,6 +57,7 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-name"
               variant="standard"
+              onChange={(event)=>setCreditCardName(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -45,6 +68,7 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-number"
               variant="standard"
+              onChange={(event)=>setCreditCardNo(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -55,6 +79,7 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-exp"
               variant="standard"
+              onChange={(event)=>setExpiration(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -66,6 +91,7 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-csc"
               variant="standard"
+              onChange={(event)=>setCvv(event.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -97,7 +123,7 @@ function SelectFlight() {
             color="primary"
             size="large"
             variant="contained"
-            onClick={() => router.push('/bookings')}
+            onClick={paymentSubmit}
           >
             Continue
           </Button>
