@@ -12,23 +12,23 @@ Before you begin, make sure you have the following installed:
 ## Installation
 
 1. Clone the repository:
-Copy
-git clone https://github.com/cedricp95/flight-cheap-react.git
+
+```git clone https://github.com/cedricp95/flight-cheap-react.git```
 
 
 2. Switch to the `main` branch:
-Copy
-git checkout main
+
+```git checkout main```
 
 
 3. Install the dependencies:
-Copy
-npm i --save
+
+```npm i --save```
 
 
 4. Start the development server:
-Copy
-npm run dev
+
+```npm run dev```
 
 
 That's it! You should now be able to access the application at `http://localhost:3000`.
