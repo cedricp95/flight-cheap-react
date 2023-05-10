@@ -32,3 +32,17 @@ npm run dev
 
 
 That's it! You should now be able to access the application at `http://localhost:3000`.
+
+
+## Quick Tour
+
+With FlightCheap, you can easily choose your desired starting and end location:
+
+![Choose locations](https://github.com/cedricp95/flight-cheap-react/assets/6656645/1a93d4be-888b-45bd-939a-a03716486876)
+
+Upon clicking the search button, FlightCheap will look for all available flights and sort them by fare price from lowest to highest:
+
+![Search results](https://github.com/cedricp95/flight-cheap-react/assets/6656645/0bf3e924-1bca-4977-9250-09a369ac5e7a)
+
+Find the cheapest flights with ease using FlightCheap!
+
