@@ -4,8 +4,6 @@ import BannerSection from "../components/BannerSection";
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 
-import Modal from "../components/Modal";
-
 import { Box } from "@mui/material";
 
 import Image from "next/image";
@@ -73,7 +71,6 @@ export default function Dashboard() {
             </div>
           </Carousel>
 
-          <Modal />
           <SearchForm setDataFlightSearch={setDataFlightSearch} />
           <SearchResults dataFlightSearch={dataFlightSearch} />
           <div style={{ width: "100%", height: "100px" }}></div>

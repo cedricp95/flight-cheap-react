@@ -142,21 +142,14 @@ function NotificationModal() {
   return (
     <>
       <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
-        <Container
-          sx={{
-            mt: 4,
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "end",
-          }}
-        >
+        <Container>
           <Button
             color="info"
             size="large"
             variant="contained"
             component="a"
             onClick={handleOpen}
+            fullWidth
           >
             Get Notified
           </Button>
