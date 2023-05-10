@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 
 import { DateRangePicker } from "react-date-range";
-
+import Modal from "./Modal";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
@@ -169,8 +169,15 @@ function SearchForm(props) {
   };
 
   return (
-    <Card sx={{ maxWidth: "80%", margin: "50px auto", marginTop: -90, backgroundColor: 'white' }}>
-      <Box component="section" sx={{ display: "flex", overflow: "hidden"}}>
+    <Card
+      sx={{
+        maxWidth: "80%",
+        margin: "50px auto",
+        marginTop: -90,
+        backgroundColor: "white",
+      }}
+    >
+      <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
         <Container
           sx={{
             mb: 5,
@@ -223,6 +230,10 @@ function SearchForm(props) {
               <Typography variant="h5" marked="center" component="h5">
                 Flight
               </Typography> */}
+
+              <FormControl fullWidth>
+                <Modal />
+              </FormControl>
             </Grid>
           </Grid>
 

@@ -108,7 +108,7 @@ function NotificationModal() {
   }
   if (!isSuccess) {
     formRender = (
-      <div>
+      <div style={{ width: "100%" }}>
         <Typography sx={{ mt: 2, mb: 1 }} component="label">
           SMS
         </Typography>
@@ -117,9 +117,11 @@ function NotificationModal() {
           country={"ph"}
           value={phone}
           onChange={(phone) => setPhone(phone)}
+          containerStyle={{ width: "100%" }}
         />
+
         <TextField
-          sx={{ mt: 4, width: "90%" }}
+          sx={{ mt: 4, width: "100%" }}
           id="input-with-icon-textfield"
           label="Email Address"
           InputProps={{
@@ -142,21 +144,14 @@ function NotificationModal() {
   return (
     <>
       <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
-        <Container
-          sx={{
-            mt: 4,
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "end",
-          }}
-        >
+        <Container>
           <Button
             color="info"
             size="large"
             variant="contained"
             component="a"
             onClick={handleOpen}
+            fullWidth
           >
             Get Notified
           </Button>
@@ -170,7 +165,12 @@ function NotificationModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} component="form" noValidate autoComplete="off">
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            sx={{ textAlign: "center" }}
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
             Get latest deals!
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2 }}>
@@ -185,15 +185,22 @@ function NotificationModal() {
             size="large"
             variant="contained"
             component="a"
-            sx={{ mt: 5 }}
+            sx={{
+              mt: 5,
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
+              textAlign: "center",
+            }}
             onClick={handleButtonClick}
           >
             {isSuccess ? "Done" : "Get Notified"}
             {spinner}
           </Button>
-          <FormHelperText sx={{ mt: 2 }} id="my-helper-text">
-            We'll never share your email/number.
-          </FormHelperText>
+
+          <Typography sx={{ mt: 2, mb: 1, textAlign: "center", color: "gray" }}>
+            We&apos;ll never share your email/number.
+          </Typography>
         </Box>
       </Modal>
     </>
