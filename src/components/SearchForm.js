@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {whereNot} from 'structkit'
+import { whereNot } from "structkit";
 import {
   Box,
   Container,
@@ -11,7 +11,7 @@ import {
   Select,
   Card,
   TextField,
-  Autocomplete
+  Autocomplete,
 } from "@mui/material";
 
 import { DateRangePicker } from "react-date-range";
@@ -27,8 +27,6 @@ function SearchForm(props) {
   const [airlineData, setAirlineData] = useState({});
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
-  const [startDateValue, setStartDateValue] = useState(null);
-  const [endDateValue, setEndDateValue] = useState(null);
   const [trip, setTrip] = React.useState(10);
 
   useEffect(() => {
@@ -86,7 +84,7 @@ function SearchForm(props) {
 
       let dataSearchFlights = [];
 
-      if (trip===10){
+      if (trip === 10) {
         dataSearchFlights = [
           {
             from_city_code: fromValue.IATA_CODE,
@@ -100,9 +98,9 @@ function SearchForm(props) {
             from_time: startDate.toLocaleDateString("en-GB"),
             to_time: endDate.toLocaleDateString("en-GB"),
           },
-        ]
+        ];
       }
-      if (trip===21){
+      if (trip === 21) {
         dataSearchFlights = [
           {
             from_city_code: fromValue.IATA_CODE,
@@ -110,7 +108,7 @@ function SearchForm(props) {
             from_time: startDate.toLocaleDateString("en-GB"),
             to_time: endDate.toLocaleDateString("en-GB"),
           },
-        ]
+        ];
       }
       get_search_flights(dataSearchFlights)
         .then(async (res, req) => {
@@ -163,7 +161,6 @@ function SearchForm(props) {
     { label: "First Class", id: "F" },
   ];
 
-
   const handleChange = (event) => {
     setTrip(event.target.value);
   };
@@ -200,7 +197,7 @@ function SearchForm(props) {
                 mb: 2,
               }}
             >
-              <FormControl required defaultValue="One Way" fullWidth>
+              <FormControl required fullWidth>
                 <InputLabel id="demo-simple-select-autowidth-label">
                   Booking Options
                 </InputLabel>
@@ -226,11 +223,6 @@ function SearchForm(props) {
                 mb: 2,
               }}
             >
-              {/* <LocalAirport />
-              <Typography variant="h5" marked="center" component="h5">
-                Flight
-              </Typography> */}
-
               <FormControl fullWidth>
                 <Modal />
               </FormControl>
@@ -246,7 +238,7 @@ function SearchForm(props) {
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setFromValue(newValue);
-                  setIataDataTo(whereNot(iataDataFrom,newValue));
+                  setIataDataTo(whereNot(iataDataFrom, newValue));
                 }}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="From" />
