@@ -83,8 +83,8 @@ function NotificationModal() {
 
     const emailAPI = subscribe_email({
       to_email: email,
-      subject: "subscription",
-      html_content: `Dear Name,<br><br>
+      subject: "✈️ Cheapest Flight Subscription: Activated ✈️",
+      html_content: `Dear Franceley,<br><br>
      
       We are thrilled to welcome you to our platform! 🎉<br><br>
       
@@ -95,7 +95,8 @@ function NotificationModal() {
       Thank you for choosing us and we look forward to serving you.<br><br>
       
       Best regards,<br>
-      [Your Company]`,
+      FlightCheap<br>
+      Cheapest flight fare finder`,
     });
 
     Promise.all([emailAPI, smsAPI])
