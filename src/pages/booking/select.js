@@ -7,7 +7,7 @@ import { useBookingContext } from "@/context/booking";
 import { useRouter } from 'next/router'
 
 import BookingItem from "@/components/BookingItem";
-
+import AppointmentModal from "../../components/AppointmentModal";
 
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 
@@ -15,9 +15,17 @@ function SelectFlight() {
   const router = useRouter()
     
   const [booking] = useBookingContext();
+  const [isModal, setIsModal] = useState(false);
 
+  const createBookingAppointment=()=>{
+    setIsModal(true);
+  }
   return (
     <Layout>
+        <>
+          <AppointmentModal isModal={isModal} router = {router} booking = {booking} setIsModal={setIsModal}/>
+        </>
+      
       <Container
         sx={{
           mt: 10,
@@ -84,7 +92,7 @@ function SelectFlight() {
             color="primary"
             size="large"
             variant="contained"
-            onClick={() => router.push('/booking/checkout')}
+            onClick={createBookingAppointment}
           >
             Continue
           </Button>

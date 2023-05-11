@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {whereNot} from 'structkit'
 import {
   Box,
   Container,
@@ -10,29 +11,30 @@ import {
   Select,
   Card,
   TextField,
-  Autocomplete,
-  Typography,
+  Autocomplete
 } from "@mui/material";
 
 import { DateRangePicker } from "react-date-range";
-
 import Modal from "./Modal";
-
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { get_iata, get_search_flights, get_airline_code } from "@/api/auth";
 
 function SearchForm(props) {
-  const [iataData, setIataData] = useState([]);
+  const [iataDataFrom, setIataDataFrom] = useState([]);
+  const [iataDataTo, setIataDataTo] = useState([]);
   const [airlineData, setAirlineData] = useState({});
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
+  const [startDateValue, setStartDateValue] = useState(null);
+  const [endDateValue, setEndDateValue] = useState(null);
+  const [trip, setTrip] = React.useState(10);
 
   useEffect(() => {
     get_iata()
       .then((res) => {
-        setIataData(res.data);
+        setIataDataFrom(res.data);
       })
       .catch((error) => {
         console.error(error);
@@ -81,14 +83,36 @@ function SearchForm(props) {
           "en-GB"
         )} - ${endDate.toLocaleDateString("en-GB")}`
       );
-      get_search_flights([
-        {
-          from_city_code: fromValue.IATA_CODE,
-          to_city_code: toValue.IATA_CODE,
-          from_time: startDate.toLocaleDateString("en-GB"),
-          to_time: endDate.toLocaleDateString("en-GB"),
-        },
-      ])
+
+      let dataSearchFlights = [];
+
+      if (trip===10){
+        dataSearchFlights = [
+          {
+            from_city_code: fromValue.IATA_CODE,
+            to_city_code: toValue.IATA_CODE,
+            from_time: startDate.toLocaleDateString("en-GB"),
+            to_time: endDate.toLocaleDateString("en-GB"),
+          },
+          {
+            from_city_code: toValue.IATA_CODE,
+            to_city_code: fromValue.IATA_CODE,
+            from_time: startDate.toLocaleDateString("en-GB"),
+            to_time: endDate.toLocaleDateString("en-GB"),
+          },
+        ]
+      }
+      if (trip===21){
+        dataSearchFlights = [
+          {
+            from_city_code: fromValue.IATA_CODE,
+            to_city_code: toValue.IATA_CODE,
+            from_time: startDate.toLocaleDateString("en-GB"),
+            to_time: endDate.toLocaleDateString("en-GB"),
+          },
+        ]
+      }
+      get_search_flights(dataSearchFlights)
         .then(async (res, req) => {
           const row_data = await res.data.map((res_data) => {
             return res_data.route.map((res_data1) => {
@@ -139,7 +163,6 @@ function SearchForm(props) {
     { label: "First Class", id: "F" },
   ];
 
-  const [trip, setTrip] = React.useState("");
 
   const handleChange = (event) => {
     setTrip(event.target.value);
@@ -219,10 +242,11 @@ function SearchForm(props) {
               {/* First row */}
 
               <Autocomplete
-                options={iataData}
+                options={iataDataFrom}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setFromValue(newValue);
+                  setIataDataTo(whereNot(iataDataFrom,newValue));
                 }}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="From" />
@@ -246,7 +270,7 @@ function SearchForm(props) {
             <Grid item xs={3}>
               {/* Second row */}
               <Autocomplete
-                options={iataData}
+                options={iataDataTo}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setToValue(newValue);

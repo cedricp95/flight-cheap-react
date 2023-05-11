@@ -1,20 +1,49 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 
-import { Grid, TextField, FormControlLabel, Checkbox, Container, Typography, Box, Button } from "@mui/material";
+import { Grid, TextField,FormControlLabel, Checkbox, Container, Typography, Box, Button } from "@mui/material";
 
+
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // import { useBookingContext } from "@/context/booking";
 import { useRouter } from 'next/router'
-
+import { post_booking_users,post_booking_payment,post_booking_final } from "@/api/auth";
 import BookingItem from "@/components/BookingItem";
+
+import BookingVerificationModal from "@/components/BookingVerificationModal";
 
 function SelectFlight() {
   const router = useRouter()
-    
- 
+
+  const [creditCardName, setCreditCardName] = useState("");
+  const [creditCardNo, setCreditCardNo] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [expiration, setExpiration] = useState(dayjs(new Date()));
+  const [isModal, setIsModal] = useState(false);
+
+  const bookingUserInfo = localStorage.getItem("booking_user_info");  
+  const paymentSubmit = ()=>{
+    post_booking_payment({
+        "credit_card_no": creditCardNo,
+        "cvv": cvv,
+        "expiration": expiration
+    }).then(val=>{
+      window.localStorage.setItem("booking_payment_info",val.data.token);
+      //props.router.push('/bookings');
+      setIsModal(true);
+    }).catch((e) => {
+      alert(e.response.data.detail);
+    });
+  }
+
   return (
     <Layout>
+      <BookingVerificationModal isModal={isModal} router = {router} setIsModal={setIsModal}/>
      <Container
         sx={{
           pt: 15,
@@ -35,6 +64,7 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-name"
               variant="standard"
+              onChange={(event)=>setCreditCardName(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -45,17 +75,24 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-number"
               variant="standard"
+              onChange={(event)=>setCreditCardNo(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DatePicker', 'DatePicker']}>
+            <DatePicker
               required
+              views={['month', 'year']}
               id="expDate"
               label="Expiry date"
-              fullWidth
-              autoComplete="cc-exp"
+              value={expiration}
               variant="standard"
+              onChange={(event)=>setExpiration(event.target.value)}
             />
+            </DemoContainer>
+          </LocalizationProvider>
+            
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
@@ -66,6 +103,7 @@ function SelectFlight() {
               fullWidth
               autoComplete="cc-csc"
               variant="standard"
+              onChange={(event)=>setCvv(event.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -97,7 +135,7 @@ function SelectFlight() {
             color="primary"
             size="large"
             variant="contained"
-            onClick={() => router.push('/bookings')}
+            onClick={paymentSubmit}
           >
             Continue
           </Button>
