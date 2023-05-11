@@ -166,7 +166,7 @@ function AppointmentModal(props) {
             sx={{ mt: 5 }}
             onClick={handleButtonClick}
           >
-            Submit you info
+            Submit your information
           </Button>
           <FormHelperText sx={{ mt: 2 }} id="my-helper-text">
             We'll never share your email/number.

@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 
-import { Grid, TextField, FormControlLabel, Checkbox, Container, Typography, Box, Button } from "@mui/material";
+import { Grid, TextField,FormControlLabel, Checkbox, Container, Typography, Box, Button } from "@mui/material";
 
+
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // import { useBookingContext } from "@/context/booking";
 import { useRouter } from 'next/router'
 import { post_booking_users,post_booking_payment,post_booking_final } from "@/api/auth";
 import BookingItem from "@/components/BookingItem";
+
 import BookingVerificationModal from "@/components/BookingVerificationModal";
 
 function SelectFlight() {
@@ -16,7 +23,7 @@ function SelectFlight() {
   const [creditCardName, setCreditCardName] = useState("");
   const [creditCardNo, setCreditCardNo] = useState("");
   const [cvv, setCvv] = useState("");
-  const [expiration, setExpiration] = useState("");
+  const [expiration, setExpiration] = useState(dayjs(new Date()));
   const [isModal, setIsModal] = useState(false);
 
   const bookingUserInfo = localStorage.getItem("booking_user_info");  
@@ -72,15 +79,20 @@ function SelectFlight() {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DatePicker', 'DatePicker']}>
+            <DatePicker
               required
+              views={['month', 'year']}
               id="expDate"
               label="Expiry date"
-              fullWidth
-              autoComplete="cc-exp"
+              value={expiration}
               variant="standard"
               onChange={(event)=>setExpiration(event.target.value)}
             />
+            </DemoContainer>
+          </LocalizationProvider>
+            
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField

@@ -29,30 +29,13 @@ const style = {
 function BookingVerificationModal(props) {
 
   const handleClose = () => {
-    setEmail("");
+    
     props.setIsModal(false);
   };
-
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
+  const [statusMsg, setStatusMsg] = useState("");
   const [isFetching, setLoading] = useState(true);
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
 
-
- 
-
-
-  const validateEmail = () => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (!emailRegex.test(email)) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  };
 
   const validateAccountBooking = () => {
    
@@ -65,14 +48,11 @@ function BookingVerificationModal(props) {
       "booking_token": bookingUserInfo,
       "payment_token": bookingPaymentInfo
     }).then(val=>{
-      console.log(val,"::val");
+      setStatusMsg("Your Booking was a success")
       setLoading(false);
-      
-      //props.router.push('/bookings');
     }).catch((e) => {
-      alert(e.response.data.detail);
+      setStatusMsg("Your Booking was a failed to process")
     });
-    console.log(props.booking);
   };
   
   const handleButtonClick = () => {
@@ -81,8 +61,7 @@ function BookingVerificationModal(props) {
   
   useEffect(() => {
     validateAccountBooking();
-    validateEmail();
-  }, [email]);
+  }, []);
 
 
   return (
@@ -95,32 +74,28 @@ function BookingVerificationModal(props) {
       >
         <Box sx={style} component="form" noValidate autoComplete="off">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Verify your booking
+            Verifying your booking
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2 }}>
-            Fly high, pay low with our unbeatable flight deals. Subscribe now!
-          </Typography>
-          
-          { isFetching ?<></>:<>
+          { isFetching ?<>
+              <Box>
+                Waiting for status
+              </Box>
+            </>:<>
               <Box>
 
-
+                {statusMsg}
               </Box>
               <Button
-              color="primary"
-              size="large"
-              variant="contained"
-              component="a"
-              sx={{ mt: 5 }}
-              onClick={handleButtonClick}
+                color="primary"
+                size="large"
+                variant="contained"
+                component="a"
+                sx={{ mt: 5 }}
+                onClick={handleButtonClick}
               >
-              Submit you info
+                Do you want to redirect to booking?
               </Button>
           </>}
-          
-          <FormHelperText sx={{ mt: 2 }} id="my-helper-text">
-            We'll never share your email/number.
-          </FormHelperText>
         </Box>
       </Modal>
     </>
