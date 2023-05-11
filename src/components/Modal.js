@@ -83,8 +83,20 @@ function NotificationModal() {
 
     const emailAPI = subscribe_email({
       to_email: email,
-      subject: "subscription",
-      html_content: "string",
+      subject: "✈️ Cheapest Flight Subscription: Activated ✈️",
+      html_content: `Dear Franceley,<br><br>
+     
+      We are thrilled to welcome you to our platform! 🎉<br><br>
+      
+      By subscribing to our service, you can expect to receive the cheapest flight offers available. ✈️<br><br>
+      
+      We are dedicated to providing you with the best deals and helping you save money on your travels. Keep an eye on your inbox for our exclusive offers and promotions.<br><br>
+      
+      Thank you for choosing us and we look forward to serving you.<br><br>
+      
+      Best regards,<br>
+      FlightCheap<br>
+      Cheapest flight fare finder`,
     });
 
     Promise.all([emailAPI, smsAPI])
