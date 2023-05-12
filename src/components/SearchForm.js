@@ -148,12 +148,6 @@ function SearchForm(props) {
     );
   };
 
-  const topPlaces = [
-    { label: "Boracay", id: 0 },
-    { label: "Singapore", id: 1 },
-    { label: "Cebu", id: 2 },
-  ];
-
   const cabinClass = [
     { label: "Economy", id: "M" },
     { label: "Economy Premium", id: "W" },
@@ -248,13 +242,16 @@ function SearchForm(props) {
                 id="filled-number"
                 label="Adults"
                 type="number"
+                defaultValue={1}
                 sx={{ width: 1, mt: 5 }}
                 variant="filled"
               />
+
               <TextField
                 id="filled-number"
                 label="Children"
                 type="number"
+                defaultValue={0}
                 sx={{ width: 1, mt: 5 }}
               />
             </Grid>
@@ -274,6 +271,7 @@ function SearchForm(props) {
               <TextField
                 id="filled-number"
                 label="Infant"
+                defaultValue={0}
                 type="number"
                 sx={{ width: 1, mt: 5 }}
               />
@@ -281,6 +279,7 @@ function SearchForm(props) {
                 disablePortal
                 id="combo-box-demo"
                 options={cabinClass}
+                defaultValue={cabinClass[0]}
                 renderInput={(params) => (
                   <TextField {...params} label="Cabin Class" />
                 )}
