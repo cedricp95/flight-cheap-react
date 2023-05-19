@@ -250,7 +250,8 @@ function SearchForm(props) {
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setFromValue(newValue);
-                  setIataDataTo(whereNot(iataDataFrom, newValue));
+                  const fromData = iataDataFrom.filter(item => item?.IATA_CODE !== newValue?.IATA_CODE);
+                  setIataDataTo(fromData);
                 }}
                 filterOptions={filterOptions}
                 renderInput={(params) => (
