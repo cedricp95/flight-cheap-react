@@ -29,6 +29,24 @@ function SearchForm(props) {
   const [toValue, setToValue] = useState(null);
   const [trip, setTrip] = React.useState(10);
 
+  // Added filter options to include top level category in search result
+  const filterOptions = (options, state) => {
+    let newOptions = [];
+    options.forEach((element) => {
+      if (
+        element.Country.replace(",", "")
+          .toLowerCase()
+          .includes(state.inputValue.toLowerCase()) ||
+        element.CITY
+          .replace(",", "")
+          .toLowerCase()
+          .includes(state.inputValue.toLowerCase())
+      )
+        newOptions.push(element);
+    });
+    return newOptions;
+  };
+
   useEffect(() => {
     get_iata()
       .then((res) => {
@@ -226,14 +244,16 @@ function SearchForm(props) {
           <Grid container spacing={2}>
             <Grid item xs={3}>
               {/* First row */}
-
               <Autocomplete
-                options={iataDataFrom}
+                options={iataDataFrom.sort((a, b) => -b.Country.localeCompare(a.Country))}
+                groupBy={(option) => option.Country}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setFromValue(newValue);
-                  setIataDataTo(whereNot(iataDataFrom, newValue));
+                  const fromData = iataDataFrom.filter(item => item?.IATA_CODE !== newValue?.IATA_CODE);
+                  setIataDataTo(fromData);
                 }}
+                filterOptions={filterOptions}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="From" />
                 )}
@@ -255,15 +275,16 @@ function SearchForm(props) {
                 sx={{ width: 1, mt: 5 }}
               />
             </Grid>
-
             <Grid item xs={3}>
               {/* Second row */}
               <Autocomplete
-                options={iataDataTo}
+                options={iataDataTo.sort((a, b) => -b.Country.localeCompare(a.Country))}
+                groupBy={(option) => option.Country}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setToValue(newValue);
                 }}
+                filterOptions={filterOptions}
                 renderInput={(params) => (
                   <TextField sx={{ width: 1 }} {...params} label="To" />
                 )}
