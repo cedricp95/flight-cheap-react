@@ -1,12 +1,12 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Typography,Button, Box } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
 
 import { useBookingContext } from "@/context/booking";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function FixedSizeGrid(props) {
-  const router = useRouter()  
+  const router = useRouter();
   const [booking, setBooking] = useBookingContext();
 
   const columns = [
@@ -56,6 +56,20 @@ export default function FixedSizeGrid(props) {
       valueGetter: (params) => params.row.conversion.PHP.toLocaleString(),
     },
     {
+      field: "deep_link",
+      headerName: "Kiwi",
+      width: 50,
+      renderCell: (params) => {
+        const onClick = (e) => {
+          e.stopPropagation(); // don't select this row after clicking
+
+          window.open(params.row.deep_link, "_blank");
+        };
+        return <Button onClick={onClick}>Wiki</Button>;
+      },
+    },
+
+    {
       field: "action",
       headerName: "Action",
       sortable: false,
@@ -63,10 +77,10 @@ export default function FixedSizeGrid(props) {
         const onClick = (e) => {
           e.stopPropagation(); // don't select this row after clicking
           setBooking(params.row);
-          router.push('/booking/select');
+          router.push("/booking/select");
         };
         return <Button onClick={onClick}>Book now</Button>;
-      }
+      },
     },
   ];
 
@@ -84,10 +98,10 @@ export default function FixedSizeGrid(props) {
         utc_departure: dataRow2.utc_departure,
         utc_arrival: dataRow2.utc_arrival,
         conversion: dataRow2.conversion,
+        deep_link: dataRow2.deep_link,
       });
     }
   }
-
 
   return (
     <>
