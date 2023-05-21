@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Typography,Button, Box } from "@mui/material";
+import { Typography,Button, Box, Link } from "@mui/material";
 
 import { useBookingContext } from "@/context/booking";
 import { useRouter } from 'next/router'
@@ -56,6 +56,15 @@ export default function FixedSizeGrid(props) {
       valueGetter: (params) => params.row.conversion.PHP.toLocaleString(),
     },
     {
+      field: "deep_link",
+      headerName: "Kiwi link",
+      sortable: false,
+      renderCell: (params) => {
+        let url=params.row.deep_link ;
+        return <a href={url} target="_blank" >Visit Kiwi</a>;
+      }
+    },
+    {
       field: "action",
       headerName: "Action",
       sortable: false,
@@ -78,6 +87,7 @@ export default function FixedSizeGrid(props) {
       const dataRow2 = dataRow[i1];
       rows.push({
         booking_token: dataRow2.booking_token,
+        deep_link: dataRow2.deep_link,
         cityFrom: dataRow2.cityFrom,
         cityTo: dataRow2.cityTo,
         airlines_name: dataRow2.airlines_name,
