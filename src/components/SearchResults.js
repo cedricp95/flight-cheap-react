@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
-import { Typography,Button, Box, Link } from "@mui/material";
+import { Typography, Button, Box, Link } from "@mui/material";
 
 import { useBookingContext } from "@/context/booking";
 import { useRouter } from "next/router";
@@ -61,9 +61,13 @@ export default function FixedSizeGrid(props) {
       headerName: "Kiwi link",
       sortable: false,
       renderCell: (params) => {
-        let url=params.row.deep_link ;
-        return <a href={url} target="_blank" >Visit Kiwi</a>;
-      }
+        let url = params.row.deep_link;
+        return (
+          <a href={url} target="_blank">
+            Visit Kiwi
+          </a>
+        );
+      },
     },
     {
       field: "action",
@@ -96,6 +100,7 @@ export default function FixedSizeGrid(props) {
         utc_departure: dataRow2.utc_departure,
         utc_arrival: dataRow2.utc_arrival,
         conversion: dataRow2.conversion,
+        deep_link: dataRow2.deep_link,
       });
     }
   }
