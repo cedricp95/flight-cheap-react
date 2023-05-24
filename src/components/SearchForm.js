@@ -37,8 +37,7 @@ function SearchForm(props) {
         element.Country.replace(",", "")
           .toLowerCase()
           .includes(state.inputValue.toLowerCase()) ||
-        element.CITY
-          .replace(",", "")
+        element.CITY.replace(",", "")
           .toLowerCase()
           .includes(state.inputValue.toLowerCase())
       )
@@ -199,6 +198,15 @@ function SearchForm(props) {
             padding: 5,
           }}
         >
+          {/* First Column
+              
+              From and To
+              Adults
+              Infants
+              Children
+              Cabin Class
+              
+              */}
           <Grid container spacing={2} sx={{ marginTop: 3, mb: 4 }}>
             <Grid
               item
@@ -209,6 +217,7 @@ function SearchForm(props) {
                 mb: 2,
               }}
             >
+              {/* Booking Options */}
               <FormControl required fullWidth>
                 <InputLabel id="demo-simple-select-autowidth-label">
                   Booking Options
@@ -236,6 +245,7 @@ function SearchForm(props) {
               }}
             >
               <FormControl fullWidth>
+                {/* Notification modal */}
                 <Modal />
               </FormControl>
             </Grid>
@@ -245,12 +255,16 @@ function SearchForm(props) {
             <Grid item xs={3}>
               {/* First row */}
               <Autocomplete
-                options={iataDataFrom.sort((a, b) => -b.Country.localeCompare(a.Country))}
+                options={iataDataFrom.sort(
+                  (a, b) => -b.Country.localeCompare(a.Country)
+                )}
                 groupBy={(option) => option.Country}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
                   setFromValue(newValue);
-                  const fromData = iataDataFrom.filter(item => item?.IATA_CODE !== newValue?.IATA_CODE);
+                  const fromData = iataDataFrom.filter(
+                    (item) => item?.IATA_CODE !== newValue?.IATA_CODE
+                  );
                   setIataDataTo(fromData);
                 }}
                 filterOptions={filterOptions}
@@ -276,9 +290,10 @@ function SearchForm(props) {
               />
             </Grid>
             <Grid item xs={3}>
-              {/* Second row */}
               <Autocomplete
-                options={iataDataTo.sort((a, b) => -b.Country.localeCompare(a.Country))}
+                options={iataDataTo.sort(
+                  (a, b) => -b.Country.localeCompare(a.Country)
+                )}
                 groupBy={(option) => option.Country}
                 getOptionLabel={(option) => option.CITY}
                 onChange={(event, newValue) => {
@@ -300,7 +315,7 @@ function SearchForm(props) {
                 disablePortal
                 id="combo-box-demo"
                 options={cabinClass}
-                defaultValue={cabinClass[0]}
+                isOptionEqualToValue={(cabinClass[0], "Economy")}
                 renderInput={(params) => (
                   <TextField {...params} label="Cabin Class" />
                 )}
@@ -309,7 +324,6 @@ function SearchForm(props) {
             </Grid>
 
             <Grid item xs={6}>
-              {/* Third row */}
               <DateRangePicker
                 minDate={new Date()}
                 ranges={dateRange}
